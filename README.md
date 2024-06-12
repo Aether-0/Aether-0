@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @Aether-0
 - 👀 I’m interested in red teaming
-- 🌱 I’m currently learning aboutpentesting
+- 🌱 I’m currently learning about pentesting
 - 💞️ I’m looking to be a menber of under ground hacking team.
 - 📫 How to reach me?Telegram:@a37h3r
 - 😄 Pronouns: ...
