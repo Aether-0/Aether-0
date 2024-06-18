@@ -1,12 +1,19 @@
-- 👋 Hi, I’m @Aether-0
-- 👀 I’m interested in red teaming
-- 🌱 I’m currently learning about pentesting
-- 💞️ I’m looking to be a menber of under ground hacking team.
-- 📫 How to reach me?Telegram:@a37h3r
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
+# 👋 Hello! I'm @Aether-0
 
-<!---
-Aether-0/Aether-0 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+## About Me
+- 👀 **Interests:** Passionate about red teaming and exploring the world of ethical hacking.
+- 🌱 **Current Focus:** 
+  - Web hacking as my primary area of expertise.
+  - Network security as my secondary focus.
+  - Programming in Python and Bash for developing scripts and tools.
+- 💞️ **Looking to Join:** Aspiring to collaborate with a skilled and discreet underground hacking team.
+
+## Contact
+- 📫 **How to Reach Me:** [Telegram: @a37h3r](https://t.me/a37h3r)
+- 😄 **Pronouns:** ...
+- ⚡ **Fun Fact:** ...
+
+## GitHub Stats
+![Aether-0's GitHub Stats](https://github-readme-stats.vercel.app/api?username=Aether-0&show_icons=true&theme=tokyonight)
+
+
