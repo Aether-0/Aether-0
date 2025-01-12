@@ -1,16 +1,16 @@
 # 👋 Hello, World! I'm @Aether-0
 
-> *"In the shadows of the digital realm, I thrive."*
+> *"In the shadows of the digital realm, I thrive... but I’m not afraid to step into the light for the right connection."* 💻❤️
 
 ---
 
 ## 🕵️‍♂️ **About Me**
 - 🔓 **Interests:** Red teaming, penetration testing, and exploring the depths of ethical hacking.
 - 🌐 **Current Focus:**
-  - **Web Hacking:** Mastering the art of exploiting web vulnerabilities.
-  - **Network Security:** Securing and breaching networks to uncover weaknesses.
-  - **Scripting & Automation:** Crafting tools in **Go**, **Python**, and **Bash** to streamline hacking workflows.
-- 🛠️ **Looking to Join:** Seeking a skilled, discreet, and elite underground hacking team to collaborate on high-stakes projects.
+  - **Web Hacking:** Mastering the art of exploiting web vulnerabilities (and maybe a heart or two along the way). 😉
+  - **Network Security:** Securing and breaching networks to uncover weaknesses... and maybe find a connection worth protecting. 🔐
+  - **Scripting & Automation:** Crafting tools in **Go**, **Python**, and **Bash** to streamline hacking workflows (and maybe write a love letter or two in code). 💌
+- 🛠️ **Looking to Join:** Seeking a skilled, discreet, and elite underground hacking team to collaborate on high-stakes projects... or maybe just someone to share a cup of coffee with while debugging code. ☕
 
 ---
 
@@ -36,19 +36,19 @@
 ---
 
 ## 📫 **Contact Me**
-- **Telegram:** [@a37h3r](https://t.me/a37h3r)
-- **Email:** [aether0@protonmail.com](mailto:aether0@protonmail.com) *(for secure communication)*
+- **Telegram:** [@k4b00m3](https://t.me/k4b00m3) *(Slide into my DMs... I promise I don’t bite... much.)* 🐍
+- **Email:** [aether0@protonmail.com](mailto:aether0@protonmail.com) *(For secure communication... or maybe just a sweet message.)* 💌
 
 ---
 
 ## ⚡ **Fun Fact**
-> *"I once bypassed a firewall using nothing but a single line of Bash code."*
+> *"I once bypassed a firewall using nothing but a single line of Bash code... and I’m still looking for someone who can bypass the firewall around my heart."* ❤️‍🔥
 
 ---
 
 ## 🔐 **Disclaimer**
-> *"All activities are conducted ethically and legally. I do not condone or support malicious hacking."*
+> *"All activities are conducted ethically and legally. I do not condone or support malicious hacking... but I do support stealing hearts (with consent, of course)."* 💘
 
 ---
 
-> *"In the world of ones and zeros, I am the ghost in the machine."*
+> *"In the world of ones and zeros, I am the ghost in the machine... but for you, I’ll always be visible."* 👻❤️
