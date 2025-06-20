@@ -36,7 +36,7 @@
 ---
 
 ## 📫 **Contact Me**
-- **Telegram:** [@k4b00m3](https://t.me/k4b00m3) *(Slide into my DMs... I promise I don’t bite... much.)* 🐍
+- **Telegram:** [@](https://t.me/) *(Slide into my DMs... I promise I don’t bite... much.)* 🐍
 - **Email:** [sanwana12.conceptx@gmail.com](mailto:sanwana12.conceptx@gmail.com) *(For secure communication... or maybe just a sweet message.)* 💌
 
 ---
