@@ -14,20 +14,55 @@ hdr()  { echo -e "\n${BLU}══════════════════
 
 [[ $EUID -ne 0 ]] && { echo "Run as root."; exit 1; }
 
+# =============================================================================
+# ██████  NEVER KILL LIST — EDIT THIS BEFORE RUNNING ██████
+# Add your SOC / hidden admin usernames here.
+# These users are PERMANENTLY protected — never killed, never deleted,
+# never logged out, SSH keys never wiped — regardless of UID or appearance.
+# =============================================================================
+NEVER_KILL=(
+  # "yoursocuser"       # <- replace with your actual hidden admin username
+  # "monitor"
+  # "soc01"
+)
+# =============================================================================
+
+# is_protected <username>
+# Returns 0 (true) if the user must never be touched under any circumstance.
+is_protected() {
+  local u="$1"
+  # 1. Hardcoded NEVER_KILL list (highest priority — checked first)
+  for nk in "${NEVER_KILL[@]}"; do
+    [[ "$u" == "$nk" ]] && return 0
+  done
+  # 2. Active session users (SAFE_USERS populated below)
+  [[ -n "${SAFE_USERS[$u]+_}" ]] && return 0
+  return 1
+}
+
 # Collect ALL users that must never be touched:
-#  - whoever called sudo
-#  - whoever is logged into any TTY right now
 #  - root itself
+#  - whoever called sudo
+#  - whoever is logged into any TTY / SSH session right now
+#  - owner of the current TTY
 declare -A SAFE_USERS
 SAFE_USERS["root"]=1
-[[ -n "${SUDO_USER:-}" ]]       && SAFE_USERS["$SUDO_USER"]=1
-logname 2>/dev/null | xargs -r -I{} bash -c 'SAFE_USERS["{}"]=${SAFE_USERS["{}"]:-1}' || true
-# All users with an active login session
+[[ -n "${SUDO_USER:-}" ]] && SAFE_USERS["$SUDO_USER"]=1
+# All active login sessions
 while IFS= read -r u; do SAFE_USERS["$u"]=1; done < <(who | awk '{print $1}' | sort -u)
-# The user owning the current TTY
+# Current SSH connection user (catches cases where 'who' misses it)
+[[ -n "${SSH_CONNECTION:-}" ]] && [[ -n "${USER:-}"  ]] && SAFE_USERS["$USER"]=1
+[[ -n "${LOGNAME:-}"         ]]                          && SAFE_USERS["$LOGNAME"]=1
+logname 2>/dev/null                                      | { read -r ln && SAFE_USERS["$ln"]=1; } || true
+# Owner of the current TTY
 tty_user=$(stat -c '%U' "$(tty 2>/dev/null)" 2>/dev/null) && SAFE_USERS["$tty_user"]=1 || true
+# Also protect NEVER_KILL users by adding them into SAFE_USERS
+for nk in "${NEVER_KILL[@]}"; do SAFE_USERS["$nk"]=1; done
 
-ok "Protected users: ${!SAFE_USERS[*]}"
+echo ""
+ok "🔒 Hardcoded protected users : ${NEVER_KILL[*]:-"(none — fill NEVER_KILL list!)"}"
+ok "🔒 Session protected users   : ${!SAFE_USERS[*]}"
+echo ""
 
 # ─────────────────────────────────────────────
 # REGEX PATTERNS
@@ -76,12 +111,25 @@ ok "Watchdog services killed."
 hdr "2. KILL ALL MALWARE / MINER PROCESSES"
 # ─────────────────────────────────────────────
 
+# Helper: get the username owning a PID
+pid_owner() {
+  local pid="$1"
+  local uid
+  uid=$(awk '/^Uid:/{print $2; exit}' /proc/"$pid"/status 2>/dev/null) || echo ""
+  getent passwd "$uid" 2>/dev/null | cut -d: -f1
+}
+
 # Kill by name regex
 while IFS= read -r pid; do
   comm=$(cat /proc/"$pid"/comm 2>/dev/null) || continue
   cmdline=$(tr -d '\0' < /proc/"$pid"/cmdline 2>/dev/null) || continue
   if echo "$comm $cmdline" | grep -iqE "$PROC_REGEX"; then
-    die "Killing PID $pid ($comm)"
+    owner=$(pid_owner "$pid")
+    if is_protected "$owner"; then
+      warn "PID $pid ($comm) matches malware regex but owner '$owner' is protected — skipping"
+      continue
+    fi
+    die "Killing PID $pid ($comm) owned by '$owner'"
     kill -9 "$pid" 2>/dev/null || true
   fi
 done < <(ls /proc | grep -E '^[0-9]+$')
@@ -90,7 +138,12 @@ done < <(ls /proc | grep -E '^[0-9]+$')
 while IFS= read -r pid; do
   exe=$(readlink -f /proc/"$pid"/exe 2>/dev/null) || continue
   if echo "$exe" | grep -qE '^(/tmp|/dev/shm|/var/tmp|/run/shm)'; then
-    die "Killing process from temp path: PID $pid -> $exe"
+    owner=$(pid_owner "$pid")
+    if is_protected "$owner"; then
+      warn "PID $pid running from temp ($exe) but owner '$owner' is protected — skipping"
+      continue
+    fi
+    die "Killing process from temp path: PID $pid -> $exe (owner: $owner)"
     kill -9 "$pid" 2>/dev/null || true
   fi
 done < <(ls /proc | grep -E '^[0-9]+$')
@@ -98,11 +151,16 @@ done < <(ls /proc | grep -E '^[0-9]+$')
 # Kill high-CPU unknown processes (>70%)
 SAFE_PROCS='mysql|mariadb|php|java|node|nginx|apache|postgres|python|ruby|sshd|bash|systemd|kernel|kworker|ksoftirq|migration|rcu_'
 while IFS= read -r line; do
-  pid=$(awk '{print $1}' <<< "$line")
-  cpu=$(awk '{print $2}' <<< "$line")
+  pid=$(awk  '{print $1}' <<< "$line")
+  cpu=$(awk  '{print $2}' <<< "$line")
   comm=$(awk '{print $3}' <<< "$line")
   if ! echo "$comm" | grep -qE "$SAFE_PROCS"; then
-    die "High CPU ($cpu%) unknown process '$comm' PID $pid — killing"
+    owner=$(pid_owner "$pid")
+    if is_protected "$owner"; then
+      warn "High-CPU ($cpu%) PID $pid ($comm) but owner '$owner' is protected — skipping"
+      continue
+    fi
+    die "High CPU ($cpu%) unknown process '$comm' PID $pid (owner: $owner) — killing"
     kill -9 "$pid" 2>/dev/null || true
   fi
 done < <(ps -eo pid,%cpu,comm --no-headers --sort=-%cpu | awk '$2+0 > 70.0')
@@ -241,9 +299,22 @@ if [[ -s /etc/ld.so.preload ]]; then
   ok "Cleared /etc/ld.so.preload"
 fi
 
+# Known legitimate system accounts that may have UID 0 on some distros
+SYSTEM_UID0_WHITELIST=(
+  root toor sync shutdown halt operator daemon
+  messagebus dbus systemd-network systemd-resolve
+  systemd-timesync syslog _apt uucp www-data
+)
+
 # Check /etc/passwd for injected users with root UID
 while IFS=: read -r user _ uid gid _ home shell; do
   if [[ "$uid" -eq 0 && "$user" != "root" ]]; then
+    # Always check is_protected first — covers NEVER_KILL, active sessions,
+    # AND known system accounts (messagebus, dbus, systemd-*, etc.)
+    if is_protected "$user" || [[ " ${SYSTEM_UID0_WHITELIST[*]} " == *" $user "* ]]; then
+      warn "UID-0 user '$user' is protected/whitelisted — skipping (verify manually)"
+      continue
+    fi
     die "Shadow root user found: $user (UID 0) — removing"
     pkill -u "$user" 2>/dev/null || true
     userdel -f -r "$user" 2>/dev/null || true
@@ -259,7 +330,10 @@ hdr "5. REMOVE UNEXPECTED USERS"
 while IFS=: read -r username _ uid _ _ _ _; do
   [[ "$uid" -lt 1000 ]] && continue
   [[ "$username" == "nobody" ]] && continue
-  [[ -n "${SAFE_USERS[$username]+_}" ]] && { ok "Skipping protected user: $username"; continue; }
+  if is_protected "$username"; then
+    ok "Skipping protected user: $username (UID $uid)"
+    continue
+  fi
   die "Removing unexpected user: $username (UID $uid)"
   pkill -u "$username" 2>/dev/null || true
   userdel -f -r "$username" 2>/dev/null || true
@@ -275,8 +349,8 @@ for dir in /root /home/*; do
   KEY_FILE="$dir/.ssh/authorized_keys"
   [[ -f "$KEY_FILE" ]] || continue
   dir_owner=$(stat -c '%U' "$dir" 2>/dev/null)
-  # Never wipe keys for protected users
-  if [[ -n "${SAFE_USERS[$dir_owner]+_}" ]]; then
+  # Never wipe keys for protected users (NEVER_KILL list takes priority)
+  if is_protected "$dir_owner"; then
     ok "Skipping authorized_keys for protected user: $dir_owner"
     if grep -qiE '(kinsing|xmrig|miner|hack|attack|bot|@[0-9]+\.[0-9]+)' "$KEY_FILE" 2>/dev/null; then
       warn "Suspicious SSH key comment in $KEY_FILE — review manually:"
