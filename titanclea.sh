@@ -234,11 +234,24 @@ while IFS=: read -r username _ uid _ _ _ _; do
 done < /etc/passwd
 
 # =============================================================================
-# PHASE 7: SYSTEM HEALTH AUDIT (FASTFETCH-LITE)
+# PHASE 7: SYSTEM HEALTH & ENVIRONMENT AUDIT
 # =============================================================================
-hdr "SYSTEM HEALTH AUDIT"
+hdr "SYSTEM HEALTH & ENVIRONMENT AUDIT"
 
-# Native data extraction
+# 1. Environment Detection (VM vs Bare Metal)
+ENV_TYPE="Bare Metal (No Hypervisor detected)"
+if command -v systemd-detect-virt >/dev/null 2>&1; then
+  virt=$(systemd-detect-virt)
+  [[ "$virt" != "none" ]] && ENV_TYPE="Virtual Machine / Container ($virt)"
+else
+  # Fallback manual check
+  sys_vendor=$(cat /sys/class/dmi/id/sys_vendor 2>/dev/null | tr '[:upper:]' '[:lower:]')
+  if [[ "$sys_vendor" =~ (qemu|virtualbox|vmware|microsoft|xen|bochs|kvm) ]]; then
+    ENV_TYPE="Virtual Machine ($sys_vendor)"
+  fi
+fi
+
+# 2. Native hardware extraction
 OS_NAME=$(grep PRETTY_NAME /etc/os-release 2>/dev/null | cut -d'"' -f2)
 KERNEL=$(uname -r)
 UPTIME=$(uptime -p 2>/dev/null || uptime | awk '{print $3,$4}' | sed 's/,//')
@@ -248,22 +261,61 @@ GPU_MODEL=$(lspci 2>/dev/null | grep -i 'vga\|3d\|2d' | cut -d':' -f3 | sed 's/^
 MEM_USAGE=$(free -h 2>/dev/null | awk '/^Mem:/ {print $3 " / " $2}')
 DISK_USAGE=$(df -h / 2>/dev/null | awk 'NR==2 {print $3 " / " $2 " ("$5")"}')
 
+echo -e "${BLU}Env    :${NC} $ENV_TYPE"
 echo -e "${BLU}OS     :${NC} ${OS_NAME:-Unknown}"
 echo -e "${BLU}Kernel :${NC} $KERNEL"
 echo -e "${BLU}Uptime :${NC} $UPTIME"
-echo -e "${BLU}Shell  :${NC} $SHELL"
 echo -e "${BLU}CPU    :${NC} $CPU_MODEL"
 echo -e "${BLU}GPU    :${NC} $GPU_MODEL"
 echo -e "${BLU}Memory :${NC} $MEM_USAGE"
 echo -e "${BLU}Disk(/):${NC} $DISK_USAGE"
 
-echo -e "\n${YEL}:: High CPU Processes (>50%)${NC}"
-ps -eo pid,%cpu,%mem,user,comm --sort=-%cpu | awk '$2+0 > 50.0' | head -5
+# 3. Network & Service Enumeration
+echo -e "\n${YEL}:: Local Services & Exposed Ports${NC}"
+
+# Attempt to get routable identifiers without writing to disk
+PUBLIC_IP=$(curl -s -m 3 ifconfig.me 2>/dev/null || wget -qO- -T 3 ifconfig.me 2>/dev/null || echo "[IP_UNKNOWN]")
+HOST_DOMAIN=$(hostname -f 2>/dev/null || echo "[DOMAIN_UNKNOWN]")
+
+# Parse listening sockets
+if command -v ss >/dev/null 2>&1; then
+  ss -tlnp 2>/dev/null | awk 'NR>1 {print $4, $6}' | while read -r port_info proc_info; do
+    port=$(echo "$port_info" | awk -F: '{print $NF}')
+    proc=$(echo "$proc_info" | awk -F'"' '{print $2}')
+    [[ -z "$proc" || -z "$port" ]] && continue
+    
+    svc_guess="Unknown Service"
+    case "$port" in
+      80|443) svc_guess="Web Server" ;;
+      2082|2083|2086|2087) svc_guess="cPanel / WHM" ;;
+      22|2222) svc_guess="SSH Service" ;;
+      3306) svc_guess="MySQL/MariaDB" ;;
+      5432) svc_guess="PostgreSQL" ;;
+      21|20) svc_guess="FTP Server" ;;
+      25|465|587|143|993) svc_guess="Mail Server" ;;
+      6379) svc_guess="Redis" ;;
+      27017) svc_guess="MongoDB" ;;
+      2375|2376) svc_guess="Docker API" ;;
+      6443) svc_guess="Kubernetes API" ;;
+    esac
+    
+    # Format the output to show potential URLs for web-based services
+    if [[ "$port" == "80" || "$port" == "443" || "$port" == "2082" || "$port" == "2083" || "$port" == "2086" || "$port" == "2087" ]]; then
+      proto="http"
+      [[ "$port" == "443" || "$port" == "2083" || "$port" == "2087" ]] && proto="https"
+      echo "  -> Port $port : $proc ($svc_guess) | Access: $proto://$HOST_DOMAIN:$port or $proto://$PUBLIC_IP:$port"
+    else
+      echo "  -> Port $port : $proc ($svc_guess)"
+    fi
+  done | sort -u
+else
+  echo "  -> 'ss' command not found. Cannot enumerate services."
+fi
 
 echo -e "\n${YEL}:: Suspicious Established Connections (Non-Standard Ports)${NC}"
 ss -tunp 2>/dev/null | grep ESTAB | awk '{print $5}' | grep -vE '(:80|:443|:22)$' | sort | uniq -c | sort -rn | head -5
 
 echo -e "\n${GRN}══════════════════════════════════════════════════════════════════════${NC}"
-echo -e "${GRN}  TITAN V4 CONTAINMENT COMPLETE${NC}"
+echo -e "${GRN}  TITAN V5 CONTAINMENT & PROFILING COMPLETE${NC}"
 echo -e "${RED}  WARNING: Credentials likely compromised. Rotate keys & passwords.${NC}"
 echo -e "${GRN}══════════════════════════════════════════════════════════════════════${NC}"
