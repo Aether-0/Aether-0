@@ -303,7 +303,7 @@ fi
 SYSTEM_UID0_WHITELIST=(
   root toor sync shutdown halt operator daemon
   messagebus dbus systemd-network systemd-resolve
-  systemd-timesync syslog _apt uucp www-data
+  systemd-timesync syslog _apt uucp www-data zph
 )
 
 # Check /etc/passwd for injected users with root UID
