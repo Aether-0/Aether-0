@@ -1,8 +1,8 @@
 #!/bin/bash
 # =============================================================================
-# TITAN AGGRESSIVE V4 : CLOUD-NATIVE & HOST IR ERADICATION SUITE
+# TITAN AGGRESSIVE V6 : CLOUD-NATIVE & HOST IR ERADICATION SUITE
 # Targets: Cryptominers, Ransomware, Docker/K8s Escapes, Rootkits.
-# Safeties: Active Sessions, messagebus, and core system utilities are shielded.
+# Safeties: Active Sessions, messagebus shielded. SSH Config is UNTOUCHED.
 # =============================================================================
 
 # --- UI & Logging Setup ---
@@ -67,7 +67,6 @@ hdr "CONTAINER & KUBERNETES PURGE"
 
 if command -v docker >/dev/null 2>&1; then
   info "Scanning Docker for rogue workloads..."
-  # Identify common miner containers and specific backdoor payloads
   MALICIOUS_CONTAINERS=$(docker ps -a -q --filter "ancestor=negoroo/amco:123" --filter "name=amco_" --filter "name=kinsing" --filter "name=xmrig")
   if [ -n "$MALICIOUS_CONTAINERS" ]; then
     docker rm -f $MALICIOUS_CONTAINERS >/dev/null 2>&1
@@ -82,7 +81,6 @@ if command -v kubectl >/dev/null 2>&1; then
   for app in sys-metrics app-worker log-rotate amco; do
     kubectl delete daemonset,deployment,cronjob,pod -l app=$app --all-namespaces >/dev/null 2>&1
   done
-  # Kill privilege escalation bindings
   kubectl get clusterrolebinding 2>/dev/null | grep "system-controller-" | awk '{print $1}' | xargs -r kubectl delete clusterrolebinding >/dev/null 2>&1
   ok "Kubernetes rogue orchestrations dropped."
 fi
@@ -126,7 +124,7 @@ done
 systemctl daemon-reload >/dev/null 2>&1
 
 if [ ${#DOOMED_PIDS[@]} -gt 0 ]; then
-  sleep 1.5 # Wait for watchdogs to hang
+  sleep 1.5 
   for pid in "${DOOMED_PIDS[@]}"; do kill -9 "$pid" 2>/dev/null || true; done
   ok "Terminated ${#DOOMED_PIDS[@]} malicious host processes."
 else
@@ -147,17 +145,14 @@ purge_file_lines() {
   fi
 }
 
-# 1. Cronjobs
 purge_file_lines /etc/crontab "$CRON_REGEX"
 for f in /etc/cron.d/*; do purge_file_lines "$f" "$CRON_REGEX"; done
 for user_cron in /var/spool/cron/crontabs/* /var/spool/cron/*; do purge_file_lines "$user_cron" "$CRON_REGEX"; done
 
-# 2. Profile Injections & RC.local
 for profile in /etc/profile /etc/bash.bashrc /etc/environment /etc/rc.local /root/.bashrc /root/.profile; do
   purge_file_lines "$profile" "(LD_PRELOAD|LD_LIBRARY_PATH.*tmp|export.*PATH.*tmp|$CONTENT_REGEX)"
 done
 
-# 3. AT Jobs & Rootkits
 rm -rf /var/spool/at/jobs/* /var/spool/at/* 2>/dev/null
 if [[ -s /etc/ld.so.preload ]]; then
   die "Rootkit LD_PRELOAD detected. Shredding file."
@@ -179,7 +174,6 @@ for dir in /tmp /var/tmp /dev/shm /root /etc/cron.d /etc/systemd/system; do
   done
 done
 
-# Nuke known malware paths
 KNOWN_BINS=(/root/.run.sh /usr/.local/run.sh /opt/nezha /tmp/.ICEd-unix /usr/local/bin/kinsing /usr/local/bin/kdevtmpfsi /usr/bin/sysupdate /usr/local/bin/xmrig /var/tmp/.x)
 for f in "${KNOWN_BINS[@]}"; do
   [[ -e "$f" ]] && { rm -rf "$f"; die "Vaporized explicit malware bin: $f"; }
@@ -191,19 +185,16 @@ done
 ok "Filesystem anomalies purged."
 
 # =============================================================================
-# PHASE 6: IAM, SSH HARDENING & CREDENTIAL SANITIZATION
+# PHASE 6: IAM SANITIZATION (SSHD CONFIG UNTOUCHED)
 # =============================================================================
 hdr "IDENTITY & ACCESS MANAGEMENT (IAM) PURGE"
 
-# 1. SSH Reversion & Hardening
-if [ -f /etc/ssh/sshd_config ]; then
-  sed -i 's/^PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config 2>/dev/null
-  sed -i 's/^PermitRootLogin yes/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config 2>/dev/null
-  systemctl restart sshd 2>/dev/null || systemctl restart ssh 2>/dev/null
-  ok "SSH Hardened: Password Auth Disabled, Root Login Restricted."
-fi
+# NOTE: sshd_config modification intentionally removed per safety requirements.
+# PasswordAuthentication remains EXACTLY as you configured it.
 
-# 2. Surgical SSH Key Cleanup
+info "Skipping sshd_config hardening. Password Auth remains enabled."
+
+# 1. Surgical SSH Key Cleanup
 SUSPICIOUS_KEYS='xmrig|kinsing|miner|stratum|pastebin|transfer\.sh|ngrok|serveo'
 for dir in /root /home/*; do
   KEY_FILE="$dir/.ssh/authorized_keys"
@@ -217,11 +208,11 @@ for dir in /root /home/*; do
   fi
 done
 
-# 3. Rogue Sudoers Scrub
+# 2. Rogue Sudoers Scrub
 rm -f /etc/sudoers.d/99-pakchoi 2>/dev/null
 sed -i '/pakchoi/d' /etc/sudoers 2>/dev/null
 
-# 4. Shadow Root & High UID Purge (Targeting pakchoi and others)
+# 3. Shadow Root & High UID Purge
 while IFS=: read -r username _ uid _ _ _ _; do
   [[ "$uid" -lt 1000 && "$uid" -ne 0 ]] && continue
   [[ "$username" == "nobody" ]] && continue
@@ -232,6 +223,8 @@ while IFS=: read -r username _ uid _ _ _ _; do
   pkill -u "$username" 2>/dev/null || true
   userdel -f -r "$username" 2>/dev/null || true
 done < /etc/passwd
+
+ok "IAM sanitized. Rogue users deleted."
 
 # =============================================================================
 # PHASE 7: SYSTEM HEALTH & ENVIRONMENT AUDIT
@@ -244,7 +237,6 @@ if command -v systemd-detect-virt >/dev/null 2>&1; then
   virt=$(systemd-detect-virt)
   [[ "$virt" != "none" ]] && ENV_TYPE="Virtual Machine / Container ($virt)"
 else
-  # Fallback manual check
   sys_vendor=$(cat /sys/class/dmi/id/sys_vendor 2>/dev/null | tr '[:upper:]' '[:lower:]')
   if [[ "$sys_vendor" =~ (qemu|virtualbox|vmware|microsoft|xen|bochs|kvm) ]]; then
     ENV_TYPE="Virtual Machine ($sys_vendor)"
@@ -273,11 +265,9 @@ echo -e "${BLU}Disk(/):${NC} $DISK_USAGE"
 # 3. Network & Service Enumeration
 echo -e "\n${YEL}:: Local Services & Exposed Ports${NC}"
 
-# Attempt to get routable identifiers without writing to disk
 PUBLIC_IP=$(curl -s -m 3 ifconfig.me 2>/dev/null || wget -qO- -T 3 ifconfig.me 2>/dev/null || echo "[IP_UNKNOWN]")
 HOST_DOMAIN=$(hostname -f 2>/dev/null || echo "[DOMAIN_UNKNOWN]")
 
-# Parse listening sockets
 if command -v ss >/dev/null 2>&1; then
   ss -tlnp 2>/dev/null | awk 'NR>1 {print $4, $6}' | while read -r port_info proc_info; do
     port=$(echo "$port_info" | awk -F: '{print $NF}')
@@ -299,7 +289,6 @@ if command -v ss >/dev/null 2>&1; then
       6443) svc_guess="Kubernetes API" ;;
     esac
     
-    # Format the output to show potential URLs for web-based services
     if [[ "$port" == "80" || "$port" == "443" || "$port" == "2082" || "$port" == "2083" || "$port" == "2086" || "$port" == "2087" ]]; then
       proto="http"
       [[ "$port" == "443" || "$port" == "2083" || "$port" == "2087" ]] && proto="https"
@@ -316,6 +305,6 @@ echo -e "\n${YEL}:: Suspicious Established Connections (Non-Standard Ports)${NC}
 ss -tunp 2>/dev/null | grep ESTAB | awk '{print $5}' | grep -vE '(:80|:443|:22)$' | sort | uniq -c | sort -rn | head -5
 
 echo -e "\n${GRN}══════════════════════════════════════════════════════════════════════${NC}"
-echo -e "${GRN}  TITAN V5 CONTAINMENT & PROFILING COMPLETE${NC}"
+echo -e "${GRN}  TITAN V6 CONTAINMENT & PROFILING COMPLETE${NC}"
 echo -e "${RED}  WARNING: Credentials likely compromised. Rotate keys & passwords.${NC}"
 echo -e "${GRN}══════════════════════════════════════════════════════════════════════${NC}"
