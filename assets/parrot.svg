@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="230" height="72" viewBox="0 0 230 72" role="img" aria-label="Parrot OS">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#0B0F17"/>
+      <stop offset="100%" stop-color="#151020"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="228" height="70" rx="12" fill="url(#bg)" stroke="#30363D"/>
+  <rect x="1" y="1" width="6" height="70" rx="3" fill="#15E0ED"/>
+  <g transform="translate(20 18)">
+    
+      <path d="M5 25C12 8 26 3 36 10c-8 0-14 4-18 10 8-4 14-3 19 0-10 1-17 6-21 15-5-2-8-5-11-10z" fill="#15E0ED"/>
+      <circle cx="25" cy="11" r="2" fill="#111111"/>
+    
+  </g>
+  <text x="64" y="31" fill="#F0F6FC" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700">Parrot OS</text>
+  <text x="64" y="51" fill="#8B949E" font-family="Arial,Helvetica,sans-serif" font-size="12">Security workstation</text>
+</svg>

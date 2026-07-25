@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="230" height="72" viewBox="0 0 230 72" role="img" aria-label="Git">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#0B0F17"/>
+      <stop offset="100%" stop-color="#151020"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="228" height="70" rx="12" fill="url(#bg)" stroke="#30363D"/>
+  <rect x="1" y="1" width="6" height="70" rx="3" fill="#F05032"/>
+  <g transform="translate(20 18)">
+    
+      <path d="M19 3l16 16-16 16L3 19z" fill="#F05032"/>
+      <circle cx="13" cy="13" r="3" fill="#FFFFFF"/>
+      <circle cx="25" cy="25" r="3" fill="#FFFFFF"/>
+      <circle cx="13" cy="25" r="3" fill="#FFFFFF"/>
+      <path d="M13 16v6l9 0M16 13h7l2 9" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+    
+  </g>
+  <text x="64" y="31" fill="#F0F6FC" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700">Git</text>
+  <text x="64" y="51" fill="#8B949E" font-family="Arial,Helvetica,sans-serif" font-size="12">Version control</text>
+</svg>

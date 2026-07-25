@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="230" height="72" viewBox="0 0 230 72" role="img" aria-label="Bash">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#0B0F17"/>
+      <stop offset="100%" stop-color="#151020"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="228" height="70" rx="12" fill="url(#bg)" stroke="#30363D"/>
+  <rect x="1" y="1" width="6" height="70" rx="3" fill="#4EAA25"/>
+  <g transform="translate(20 18)">
+    
+      <rect x="1" y="4" width="36" height="28" rx="4" fill="#1F2428" stroke="#4EAA25"/>
+      <path d="M8 12l7 6-7 6" fill="none" stroke="#4EAA25" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M18 25h10" stroke="#C9D1D9" stroke-width="3" stroke-linecap="round"/>
+    
+  </g>
+  <text x="64" y="31" fill="#F0F6FC" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700">Bash</text>
+  <text x="64" y="51" fill="#8B949E" font-family="Arial,Helvetica,sans-serif" font-size="12">Linux automation</text>
+</svg>

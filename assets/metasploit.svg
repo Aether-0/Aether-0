@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="230" height="72" viewBox="0 0 230 72" role="img" aria-label="Metasploit">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#0B0F17"/>
+      <stop offset="100%" stop-color="#151020"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="228" height="70" rx="12" fill="url(#bg)" stroke="#30363D"/>
+  <rect x="1" y="1" width="6" height="70" rx="3" fill="#2596CD"/>
+  <g transform="translate(20 18)">
+    
+      <path d="M19 3l14 8v16l-14 8-14-8V11z" fill="#2596CD"/>
+      <path d="M10 25V13l9 7 9-7v12" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round"/>
+    
+  </g>
+  <text x="64" y="31" fill="#F0F6FC" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700">Metasploit</text>
+  <text x="64" y="51" fill="#8B949E" font-family="Arial,Helvetica,sans-serif" font-size="12">Controlled exploitation</text>
+</svg>
