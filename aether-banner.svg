@@ -1,0 +1,184 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1200"
+  height="320"
+  viewBox="0 0 1200 320"
+  role="img"
+  aria-labelledby="title description"
+>
+  <title id="title">Aether Cybersecurity Profile</title>
+  <desc id="description">
+    Dark cybersecurity profile banner for Aether, a security researcher and tool builder.
+  </desc>
+
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#070A10"/>
+      <stop offset="55%" stop-color="#0D1117"/>
+      <stop offset="100%" stop-color="#12091F"/>
+    </linearGradient>
+
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6D28D9"/>
+      <stop offset="50%" stop-color="#A855F7"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+
+    <pattern
+      id="grid"
+      width="32"
+      height="32"
+      patternUnits="userSpaceOnUse"
+    >
+      <path
+        d="M 32 0 L 0 0 0 32"
+        fill="none"
+        stroke="#8B5CF6"
+        stroke-width="0.5"
+        opacity="0.13"
+      />
+    </pattern>
+
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="320" rx="20" fill="url(#background)"/>
+  <rect width="1200" height="320" rx="20" fill="url(#grid)"/>
+
+  <rect
+    x="1"
+    y="1"
+    width="1198"
+    height="318"
+    rx="19"
+    fill="none"
+    stroke="#30363D"
+    stroke-width="2"
+  />
+
+  <circle
+    cx="1040"
+    cy="80"
+    r="125"
+    fill="#7C3AED"
+    opacity="0.08"
+  />
+
+  <circle
+    cx="1095"
+    cy="250"
+    r="170"
+    fill="#A855F7"
+    opacity="0.05"
+  />
+
+  <path
+    d="M0 265 C230 210 360 320 600 255 C830 190 970 290 1200 215"
+    fill="none"
+    stroke="#7C3AED"
+    stroke-width="2"
+    opacity="0.22"
+  />
+
+  <path
+    d="M0 285 C220 230 390 340 625 275 C850 215 1010 310 1200 245"
+    fill="none"
+    stroke="#A855F7"
+    stroke-width="1"
+    opacity="0.15"
+  />
+
+  <g transform="translate(72 64)">
+    <rect
+      x="0"
+      y="0"
+      width="10"
+      height="194"
+      rx="5"
+      fill="url(#accent)"
+      filter="url(#softGlow)"
+    />
+
+    <text
+      x="42"
+      y="45"
+      fill="#8B949E"
+      font-family="monospace"
+      font-size="19"
+      letter-spacing="4"
+    >
+      SECURITY RESEARCH PROFILE
+    </text>
+
+    <text
+      x="38"
+      y="125"
+      fill="#F0F6FC"
+      font-family="monospace"
+      font-size="76"
+      font-weight="700"
+      letter-spacing="12"
+    >
+      AETHER
+    </text>
+
+    <rect
+      x="42"
+      y="149"
+      width="540"
+      height="3"
+      rx="2"
+      fill="url(#accent)"
+    />
+
+    <text
+      x="42"
+      y="190"
+      fill="#C9D1D9"
+      font-family="monospace"
+      font-size="19"
+      letter-spacing="2"
+    >
+      RESEARCHER  /  RED TEAM  /  TOOL BUILDER
+    </text>
+  </g>
+
+  <g
+    transform="translate(900 108)"
+    font-family="monospace"
+    font-size="17"
+  >
+    <text x="0" y="0" fill="#A855F7">root@redshadow</text>
+    <text x="150" y="0" fill="#8B949E">:</text>
+    <text x="164" y="0" fill="#C9D1D9">~/security</text>
+    <text x="0" y="35" fill="#8B949E">$ status</text>
+    <text x="0" y="70" fill="#3FB950">AUTHORIZED</text>
+    <text x="0" y="105" fill="#8B949E">$ build --responsibly</text>
+  </g>
+
+  <g transform="translate(1105 40)">
+    <circle
+      cx="0"
+      cy="0"
+      r="5"
+      fill="#A855F7"
+      filter="url(#softGlow)"
+    />
+    <circle cx="-26" cy="22" r="3" fill="#7C3AED"/>
+    <circle cx="20" cy="34" r="3" fill="#C084FC"/>
+
+    <path
+      d="M0 0 L-26 22 L20 34 Z"
+      fill="none"
+      stroke="#8B5CF6"
+      stroke-width="1"
+      opacity="0.65"
+    />
+  </g>
+</svg>
