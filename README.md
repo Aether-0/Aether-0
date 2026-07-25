@@ -1,8 +1,10 @@
 <div align="center">
 
-<img src="aether-banner.svg" alt="Aether cybersecurity profile banner" width="100%">
+<img src="./assets/aether-cyber.gif" alt="Aether cybersecurity profile banner" width="100%">
 
 <br>
+
+# San Wana Zaw
 
 ### Cybersecurity Student · Security Researcher · Tool Builder
 
@@ -12,33 +14,29 @@
 
 [Profile](https://github.com/Aether-0) ·
 [Repositories](https://github.com/Aether-0?tab=repositories) ·
-[Projects](https://github.com/Aether-0?tab=projects) ·
-[Activity](https://github.com/Aether-0?tab=overview)
+[Projects](https://github.com/Aether-0?tab=projects)
 
 </div>
 
 ---
 
-## About
+## Profile
 
 ```text
-Name        : San Wana Zaw
 Alias       : Aether
 Discipline  : Cyber Security
-Role        : Student, Security Researcher and Tool Builder
+Role        : Security Researcher and Tool Builder
 Environment : Linux
 Objective   : Professional Penetration Tester and Red Teamer
 ```
 
-I am a B.Sc. Computer Science student specializing in Cyber Security.
+I am a B.Sc. Computer Science student specializing in Cyber Security. My work focuses on practical security research, penetration testing, reconnaissance automation, and building tools that make authorized testing more efficient.
 
-My work focuses on understanding how applications and networks fail, developing practical security tools, automating repetitive testing workflows, and documenting vulnerability research responsibly.
-
-I am interested in building useful systems rather than collecting tools without understanding how they work.
+I value deep technical understanding, reproducible results, clear reporting, and responsible disclosure.
 
 ---
 
-## Areas of Focus
+## Focus
 
 <table>
 <tr>
@@ -49,9 +47,9 @@ I am interested in building useful systems rather than collecting tools without 
 - Web application security
 - Vulnerability analysis
 - Proof-of-concept development
-- Responsible disclosure
-- CVE research
-- Security documentation
+- Authentication and authorization testing
+- Responsible vulnerability disclosure
+- Technical security reporting
 
 </td>
 <td width="50%" valign="top">
@@ -60,34 +58,33 @@ I am interested in building useful systems rather than collecting tools without 
 
 - Penetration testing
 - Red-team methodology
-- Network security
-- Reconnaissance
 - Attack-surface analysis
+- Reconnaissance
+- Network security
 - Capture the Flag challenges
 
 </td>
 </tr>
-
 <tr>
 <td width="50%" valign="top">
 
 ### Engineering
 
 - Security automation
-- Command-line utilities
+- Command-line tools
+- HTTP testing utilities
 - Linux tooling
-- HTTP testing tools
-- Recon workflow development
-- Scripting and integration
+- Workflow integration
+- Technical documentation
 
 </td>
 <td width="50%" valign="top">
 
-### Current Learning
+### Current Development
 
 - Advanced web exploitation
-- Authentication security
-- Access-control testing
+- Business-logic testing
+- Access-control vulnerabilities
 - Network exploitation
 - Secure tool development
 - Professional reporting
@@ -98,7 +95,7 @@ I am interested in building useful systems rather than collecting tools without 
 
 ---
 
-## Featured Projects
+## Featured Work
 
 <table>
 <tr>
@@ -106,21 +103,16 @@ I am interested in building useful systems rather than collecting tools without 
 
 ### [HTTPC](https://github.com/Aether-0/httpc)
 
-A lightweight HTTP method-testing utility written in Go.
+A lightweight HTTP method-testing utility written in Go for authorized security assessments.
 
-It helps security researchers identify supported HTTP methods across one or more authorized targets.
-
-**Key capabilities**
+**Capabilities**
 
 - Concurrent request processing
 - Custom HTTP method selection
 - Status-code filtering
-- Configurable timeout and retries
-- Standard-input support
-- File output
-- Silent and verbose modes
-
-**Technology**
+- Configurable timeouts and retries
+- Standard-input and file support
+- Silent and verbose output
 
 `Go` `HTTP` `Concurrency` `CLI`
 
@@ -129,62 +121,54 @@ It helps security researchers identify supported HTTP methods across one or more
 
 ### [CVE-2024-12986 Research Tooling](https://github.com/Aether-0/CVE-2024-12986)
 
-Educational tooling for studying CVE-2024-12986 in controlled and authorized environments.
+Educational tooling for studying CVE-2024-12986 in controlled laboratory environments.
 
-**Repository contents**
+**Contents**
 
 - Bash-based scanner
 - Python proof of concept
-- Vulnerability explanation
-- Testing instructions
-- Responsible-use guidance
+- Vulnerability documentation
+- Testing guidance
+- Responsible-use notice
 
-**Technology**
-
-`Python` `Bash` `HTTP` `Vulnerability Research`
+`Python` `Bash` `HTTP` `Security Research`
 
 </td>
 </tr>
-
 <tr>
 <td width="50%" valign="top">
 
 ### [TryHackMe VPN Shortcut](https://github.com/Aether-0/tryhackmevpn-shortcut)
 
-A Linux command-line utility that simplifies managing a TryHackMe OpenVPN connection.
+A Linux utility that simplifies managing a TryHackMe OpenVPN connection.
 
-**Key capabilities**
+**Capabilities**
 
 - VPN configuration installation
 - Global command shortcut
-- Connection start and stop controls
+- Start and stop controls
 - Configuration replacement
-- Linux-focused setup
-
-**Technology**
+- Linux-focused workflow
 
 `Bash` `Linux` `OpenVPN` `Automation`
 
 </td>
 <td width="50%" valign="top">
 
-### Security Research Portfolio
+### Vulnerability Research
 
-My research process focuses on reproducible testing, minimal proof of impact, clear documentation, and responsible communication.
-
-**Research workflow**
-
-- Confirm authorization and scope
-- Reproduce the behavior
-- Identify the root cause
-- Measure realistic impact
-- Build a minimal proof of concept
-- Document remediation guidance
-- Disclose responsibly
+My research process emphasizes reproducibility, minimal proof of impact, clear documentation, and coordinated disclosure.
 
 **Research milestone**
 
 `CVE-2025-55575`
+
+**Principles**
+
+- Confirm scope before testing
+- Prove impact without causing harm
+- Access only what is necessary
+- Provide practical remediation
 
 </td>
 </tr>
@@ -194,45 +178,21 @@ My research process focuses on reproducible testing, minimal proof of impact, cl
 
 ## Technical Stack
 
-### Languages
+### Programming and Scripting
 
-<kbd>Python</kbd>
-<kbd>Go</kbd>
-<kbd>Bash</kbd>
-<kbd>Java</kbd>
-<kbd>HTML</kbd>
-<kbd>CSS</kbd>
-<kbd>JavaScript</kbd>
-<kbd>SQL</kbd>
+`Python` `Go` `Bash` `Java` `JavaScript` `HTML` `CSS` `SQL`
 
 ### Security
 
-<kbd>Burp Suite</kbd>
-<kbd>Nmap</kbd>
-<kbd>Metasploit</kbd>
-<kbd>OWASP Testing</kbd>
-<kbd>Web Recon</kbd>
-<kbd>Network Analysis</kbd>
-<kbd>CTF</kbd>
+`Burp Suite` `Nmap` `Metasploit` `OWASP Testing` `Web Recon` `Network Analysis` `CTF`
 
-### Systems
+### Systems and Development
 
-<kbd>Linux</kbd>
-<kbd>Kali Linux</kbd>
-<kbd>Parrot OS</kbd>
-<kbd>Git</kbd>
-<kbd>GitHub</kbd>
-<kbd>OpenVPN</kbd>
-<kbd>Docker</kbd>
+`Linux` `Kali Linux` `Parrot OS` `Git` `GitHub` `OpenVPN` `Docker`
 
-### Development
+### Engineering
 
-<kbd>CLI Development</kbd>
-<kbd>Automation</kbd>
-<kbd>REST APIs</kbd>
-<kbd>Concurrency</kbd>
-<kbd>Shell Scripting</kbd>
-<kbd>Technical Documentation</kbd>
+`CLI Development` `Automation` `REST APIs` `Concurrency` `Shell Scripting` `Technical Writing`
 
 ---
 
@@ -242,8 +202,8 @@ My research process focuses on reproducible testing, minimal proof of impact, cl
 aether = {
     "research": [
         "web application vulnerabilities",
-        "access-control failures",
         "authentication weaknesses",
+        "access-control failures",
         "network security"
     ],
     "engineering": [
@@ -254,9 +214,9 @@ aether = {
     ],
     "principles": [
         "understand before automating",
+        "test only with authorization",
         "prove impact without causing harm",
-        "document findings clearly",
-        "test only with authorization"
+        "document findings clearly"
     ],
     "goal": "Become a professional penetration tester and red teamer"
 }
@@ -264,76 +224,49 @@ aether = {
 
 ---
 
-## Methodology
+## Research Workflow
 
 ```text
+SCOPE
+  Confirm authorization
+  Review program rules
+  Identify allowed assets
+  Define testing limits
+
 RECON
-  |
-  +-- Asset discovery
-  +-- Service identification
-  +-- Technology analysis
-  +-- Attack-surface mapping
-  |
+  Discover assets
+  Identify technologies
+  Map exposed services
+  Build the attack surface
+
 TEST
-  |
-  +-- Authentication
-  +-- Authorization
-  +-- Input handling
-  +-- Business logic
-  +-- Configuration
-  |
+  Authentication
+  Authorization
+  Input handling
+  Business logic
+  Session management
+  Security configuration
+
 VALIDATE
-  |
-  +-- Reproduce consistently
-  +-- Minimize the proof of concept
-  +-- Confirm realistic impact
-  +-- Avoid unnecessary data access
-  |
+  Reproduce consistently
+  Identify the root cause
+  Confirm realistic impact
+  Minimize unnecessary access
+
 REPORT
-  |
-  +-- Explain the root cause
-  +-- Provide reproduction steps
-  +-- Describe the impact
-  +-- Recommend remediation
+  Provide clear reproduction steps
+  Explain the security impact
+  Include relevant evidence
+  Recommend practical remediation
 ```
-
----
-
-## Engineering Principles
-
-> Build tools that reduce repetitive work without replacing understanding.
-
-> A successful proof of concept demonstrates the vulnerability with the minimum necessary impact.
-
-> Good security research is reproducible, authorized, clearly documented, and responsibly disclosed.
-
----
-
-## GitHub Activity
-
-Dynamic statistics have intentionally been excluded to prevent broken images, rate-limit errors, and unavailable third-party services.
-
-You can view my live GitHub information directly through the following pages:
-
-- [Contribution activity](https://github.com/Aether-0)
-- [Public repositories](https://github.com/Aether-0?tab=repositories)
-- [Recently updated repositories](https://github.com/Aether-0?tab=repositories&sort=updated)
-- [Security projects](https://github.com/Aether-0?tab=repositories&q=security)
 
 ---
 
 ## Responsible Security
 
-All security testing, vulnerability research, and proof-of-concept work presented on this profile is intended only for:
+All security testing, vulnerability research, and proof-of-concept work presented on this profile is intended only for systems I own, controlled laboratories, Capture the Flag challenges, educational security platforms, bug-bounty programs within their published scope, or systems where explicit authorization has been granted.
 
-- Systems I own
-- Controlled laboratory environments
-- Capture the Flag challenges
-- Educational platforms
-- Bug-bounty programs within their published scope
-- Systems where explicit authorization has been granted
-
-I do not support unauthorized access, data theft, service disruption, malware deployment, credential abuse, or destructive testing.
+I do not support unauthorized access, credential abuse, data theft, service disruption, malware deployment, destructive testing, or activity outside an approved scope.
 
 ---
 
@@ -341,23 +274,13 @@ I do not support unauthorized access, data theft, service disruption, malware de
 
 For project questions, bug reports, improvements, or responsible security collaboration, open an issue in the relevant repository.
 
-When reporting a problem with one of my tools, include:
-
-- Operating system
-- Tool version or commit
-- Command executed
-- Expected result
-- Actual result
-- Relevant error output
-
----
-
 <div align="center">
 
 ### Think deeply. Test responsibly. Build continuously.
 
 ```text
-aether@redshadow:~/security$ echo "Understand the system before attempting to break it."
+aether@redshadow:~/security$ status
+learning | researching | building
 ```
 
 </div>
