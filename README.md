@@ -180,19 +180,30 @@ My research process emphasizes reproducibility, minimal proof of impact, clear d
 
 ### Programming and Scripting
 
-`Python` `Go` `Bash` `Java` `JavaScript` `HTML` `CSS` `SQL`
-
-### Security
-
-`Burp Suite` `Nmap` `Metasploit` `OWASP Testing` `Web Recon` `Network Analysis` `CTF`
+<p>
+  <img src="./assets/python.svg" alt="Python" width="230">
+  <img src="./assets/go.svg" alt="Go" width="230">
+  <img src="./assets/bash.svg" alt="Bash" width="230">
+  <img src="./assets/java.svg" alt="Java" width="230">
+</p>
 
 ### Systems and Development
 
-`Linux` `Kali Linux` `Parrot OS` `Git` `GitHub` `OpenVPN` `Docker`
+<p>
+  <img src="./assets/linux.svg" alt="Linux" width="230">
+  <img src="./assets/kali.svg" alt="Kali Linux" width="230">
+  <img src="./assets/parrot.svg" alt="Parrot OS" width="230">
+  <img src="./assets/git.svg" alt="Git" width="230">
+</p>
 
-### Engineering
+### Security Tools
 
-`CLI Development` `Automation` `REST APIs` `Concurrency` `Shell Scripting` `Technical Writing`
+<p>
+  <img src="./assets/burp.svg" alt="Burp Suite" width="230">
+  <img src="./assets/nmap.svg" alt="Nmap" width="230">
+  <img src="./assets/metasploit.svg" alt="Metasploit" width="230">
+  <img src="./assets/owasp.svg" alt="OWASP" width="230">
+</p>
 
 ---
 
