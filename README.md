@@ -1,54 +1,220 @@
-# 👋 Hello, World! I'm @Aether-0
+<div align="center">
 
-> *"In the shadows of the digital realm, I thrive... but I’m not afraid to step into the light for the right connection."* 💻❤️
+# ᴀᴇᴛʜᴇʀ
+
+### `Cybersecurity Student` • `Security Researcher` • `Tool Builder`
+
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=20&duration=2800&pause=900&color=9D4EDD&center=true&vCenter=true&width=750&lines=Breaking+things+to+understand+how+they+work.;Building+security+tools+and+automation.;Learning+offensive+security%2C+one+target+at+a+time." alt="Typing SVG" />
+
+<br>
+
+[![GitHub followers](https://img.shields.io/github/followers/Aether-0?style=for-the-badge\&logo=github\&logoColor=white\&color=181717)](https://github.com/Aether-0?tab=followers)
+![Profile Views](https://komarev.com/ghpvc/?username=Aether-0\&style=for-the-badge\&color=7B2CBF)
+
+</div>
 
 ---
 
-## 🕵️‍♂️ **About Me**
-- 🔓 **Interests:** Red teaming, penetration testing, and exploring the depths of ethical hacking.
-- 🌐 **Current Focus:**
-  - **Web Hacking:** Mastering the art of exploiting web vulnerabilities (and maybe a heart or two along the way). 😉
-  - **Network Security:** Securing and breaching networks to uncover weaknesses... and maybe find a connection worth protecting. 🔐
-  - **Scripting & Automation:** Crafting tools in **Go**, **Python**, and **Bash** to streamline hacking workflows (and maybe write a love letter or two in code). 💌
-- 🛠️ **Looking to Join:** Seeking a skilled, discreet, and elite underground hacking team to collaborate on high-stakes projects... or maybe just someone to share a cup of coffee with while debugging code. ☕
+## `whoami`
+
+```text
+Name       : San Wana Zaw
+Alias      : Aether
+Role       : Cybersecurity Student & Security Researcher
+Focus      : Web Security, Red Teaming, Recon and Automation
+Environment: Linux
+Status     : Always learning. Always building.
+```
+
+I am a **B.Sc. Computer Science student specializing in Cyber Security**.
+
+I enjoy understanding how applications and networks fail, building tools that improve security-testing workflows, and researching vulnerabilities in authorized environments.
+
+My main interests include:
+
+* Web application security
+* Penetration testing
+* Red-team methodology
+* Reconnaissance automation
+* Network security
+* Vulnerability research
+* Capture the Flag challenges
 
 ---
 
-## 🛡️ **Skills & Tools**
+## `featured_projects`
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### [HTTPC](https://github.com/Aether-0/httpc)
+
+A fast HTTP method-testing utility written in Go.
+
+**Features**
+
+* Concurrent scanning
+* Custom HTTP methods
+* Status-code filtering
+* Timeout and retry controls
+* File and stdin input
+* Silent and verbose modes
+
+</td>
+<td width="50%" valign="top">
+
+### [CVE-2024-12986 Tooling](https://github.com/Aether-0/CVE-2024-12986)
+
+Educational security-research tooling for studying CVE-2024-12986 inside authorized laboratory environments.
+
+**Includes**
+
+* Bash-based scanner
+* Python proof of concept
+* Vulnerability documentation
+* Testing instructions
+* Responsible-use guidance
+
+</td>
+</tr>
+
+<tr>
+<td width="50%" valign="top">
+
+### [TryHackMe VPN Shortcut](https://github.com/Aether-0/tryhackmevpn-shortcut)
+
+A Linux utility that simplifies managing a TryHackMe OpenVPN connection.
+
+**Features**
+
+* Quick VPN installation
+* Global command shortcut
+* Start and stop controls
+* Easy VPN configuration updates
+
+</td>
+<td width="50%" valign="top">
+
+### Security Research
+
+I research vulnerabilities, create controlled proof-of-concept demonstrations, and document findings for responsible disclosure.
+
+My security work includes research associated with:
+
+```text
+CVE-2025-55575
+```
+
+</td>
+</tr>
+</table>
+
+---
+
+## `technical_stack`
+
 ### Languages
-![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Bash](https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white)
 
-### Tools
-![Parrot OS](https://img.shields.io/badge/Parrot_OS-4B946A?style=for-the-badge&logo=parrot-os&logoColor=white)
-![Kali Linux](https://img.shields.io/badge/Kali_Linux-557C94?style=for-the-badge&logo=kali-linux&logoColor=white)
-![Burp Suite](https://img.shields.io/badge/Burp_Suite-FF6F61?style=for-the-badge&logo=burp-suite&logoColor=white)
-![Metasploit](https://img.shields.io/badge/Metasploit-FF0000?style=for-the-badge&logo=metasploit&logoColor=white)
+<p>
+<img src="https://img.shields.io/badge/Python-111111?style=for-the-badge&logo=python&logoColor=FFD43B">
+<img src="https://img.shields.io/badge/Go-111111?style=for-the-badge&logo=go&logoColor=00ADD8">
+<img src="https://img.shields.io/badge/Bash-111111?style=for-the-badge&logo=gnu-bash&logoColor=4EAA25">
+<img src="https://img.shields.io/badge/Java-111111?style=for-the-badge&logo=openjdk&logoColor=ED8B00">
+<img src="https://img.shields.io/badge/HTML5-111111?style=for-the-badge&logo=html5&logoColor=E34F26">
+<img src="https://img.shields.io/badge/CSS3-111111?style=for-the-badge&logo=css3&logoColor=1572B6">
+</p>
 
----
+### Security
 
-## 📊 **GitHub Stats**
-![Aether-0's GitHub Stats](https://github-readme-stats.vercel.app/api?username=Aether-0&show_icons=true&theme=tokyonight)
+<p>
+<img src="https://img.shields.io/badge/Burp_Suite-111111?style=for-the-badge&logo=burp-suite&logoColor=FF6633">
+<img src="https://img.shields.io/badge/Metasploit-111111?style=for-the-badge&logo=metasploit&logoColor=2596CD">
+<img src="https://img.shields.io/badge/Nmap-111111?style=for-the-badge&logoColor=white">
+<img src="https://img.shields.io/badge/OWASP-111111?style=for-the-badge&logo=owasp&logoColor=white">
+<img src="https://img.shields.io/badge/CTF-111111?style=for-the-badge&logo=hackthebox&logoColor=9FEF00">
+</p>
 
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Aether-0&layout=compact&theme=tokyonight&hide=html,css)
+### Systems and Development
 
----
-
-## 📫 **Contact Me**
-- **Telegram:** [@](https://t.me/) *(Slide into my DMs... I promise I don’t bite... much.)* 🐍
-- **Email:** [sanwana12.conceptx@gmail.com](mailto:sanwana12.conceptx@gmail.com) *(For secure communication... or maybe just a sweet message.)* 💌
-
----
-
-## ⚡ **Fun Fact**
-> *"I once bypassed a firewall using nothing but a single line of Bash code... and I’m still looking for someone who can bypass the firewall around my heart."* ❤️‍🔥
-
----
-
-## 🔐 **Disclaimer**
-> *"All activities are conducted ethically and legally. I do not condone or support malicious hacking... but I do support stealing hearts (with consent, of course)."* 💘
+<p>
+<img src="https://img.shields.io/badge/Linux-111111?style=for-the-badge&logo=linux&logoColor=FCC624">
+<img src="https://img.shields.io/badge/Kali_Linux-111111?style=for-the-badge&logo=kali-linux&logoColor=557C94">
+<img src="https://img.shields.io/badge/Parrot_OS-111111?style=for-the-badge&logo=parrotsecurity&logoColor=15E0ED">
+<img src="https://img.shields.io/badge/Git-111111?style=for-the-badge&logo=git&logoColor=F05032">
+<img src="https://img.shields.io/badge/GitHub-111111?style=for-the-badge&logo=github&logoColor=white">
+</p>
 
 ---
 
-> *"In the world of ones and zeros, I am the ghost in the machine... but for you, I’ll always be visible."* 👻❤️
+## `current_focus`
+
+```python
+aether = {
+    "learning": [
+        "advanced web exploitation",
+        "network security",
+        "red-team operations",
+        "vulnerability research"
+    ],
+    "building": [
+        "recon automation",
+        "security tooling",
+        "Linux utilities"
+    ],
+    "goal": "Become a professional penetration tester and red teamer"
+}
+```
+
+---
+
+## `github_activity`
+
+<div align="center">
+
+<img height="170" src="https://github-readme-stats.vercel.app/api?username=Aether-0&show_icons=true&theme=midnight-purple&hide_border=true&bg_color=0D1117&title_color=9D4EDD&icon_color=C77DFF&text_color=FFFFFF">
+
+<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Aether-0&layout=compact&theme=midnight-purple&hide_border=true&bg_color=0D1117&title_color=9D4EDD&text_color=FFFFFF">
+
+<br>
+
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=Aether-0&theme=midnight-purple&hide_border=true&background=0D1117&ring=9D4EDD&fire=C77DFF&currStreakLabel=C77DFF">
+
+</div>
+
+---
+
+## `contribution_graph`
+
+<div align="center">
+
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=Aether-0&bg_color=0d1117&color=c77dff&line=7b2cbf&point=ffffff&area=true&hide_border=true">
+
+</div>
+
+---
+
+## `security_policy`
+
+> All security testing, research, and proof-of-concept work presented on this profile is intended only for authorized systems, controlled labs, Capture the Flag challenges, and responsible vulnerability disclosure.
+
+I do not support unauthorized access, data theft, service disruption, or malicious activity.
+
+---
+
+## `contact`
+
+For questions, collaboration, bug reports, or project suggestions, open an issue in the relevant repository.
+
+<div align="center">
+
+### `Think deeply. Test responsibly. Build continuously.`
+
+<br>
+
+```text
+┌──(aether㉿redshadow)-[~/security]
+└─$ echo "The quieter you become, the more you are able to hear."
+```
+
+</div>
