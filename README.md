@@ -1,54 +1,104 @@
 <div align="center">
 
-# ᴀᴇᴛʜᴇʀ
+<img src="./assets/aether-banner.svg" alt="Aether cybersecurity profile banner" width="100%">
+
+<br>
 
 ### Cybersecurity Student · Security Researcher · Tool Builder
 
-<img
-  src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=19&duration=2800&pause=900&color=9D4EDD&center=true&vCenter=true&width=760&lines=Breaking+things+to+understand+how+they+work.;Building+security+tools+and+automation.;Learning+offensive+security+one+target+at+a+time."
-  alt="Typing introduction"
-/>
+`Web Security` · `Red Teaming` · `Vulnerability Research` · `Recon Automation`
 
-<br><br>
+<br>
 
-[![GitHub](https://img.shields.io/badge/GitHub-Aether--0-181717?style=for-the-badge&logo=github)](https://github.com/Aether-0)
-[![Followers](https://img.shields.io/github/followers/Aether-0?style=for-the-badge&logo=github&label=Followers&color=7B2CBF)](https://github.com/Aether-0?tab=followers)
-![Profile Views](https://komarev.com/ghpvc/?username=Aether-0&style=for-the-badge&color=7B2CBF)
+[Profile](https://github.com/Aether-0) ·
+[Repositories](https://github.com/Aether-0?tab=repositories) ·
+[Projects](https://github.com/Aether-0?tab=projects) ·
+[Activity](https://github.com/Aether-0?tab=overview)
 
 </div>
 
 ---
 
-## `whoami`
+## About
 
 ```text
 Name        : San Wana Zaw
 Alias       : Aether
-Role        : Cybersecurity Student and Security Researcher
-Speciality  : Cyber Security
-Focus       : Web Security, Red Teaming, Recon and Automation
+Discipline  : Cyber Security
+Role        : Student, Security Researcher and Tool Builder
 Environment : Linux
-Status      : Always learning. Always building.
+Objective   : Professional Penetration Tester and Red Teamer
 ```
 
-I am a **B.Sc. Computer Science student specializing in Cyber Security**.
+I am a B.Sc. Computer Science student specializing in Cyber Security.
 
-I enjoy understanding how applications and networks fail, researching vulnerabilities, and building tools that improve security-testing workflows.
+My work focuses on understanding how applications and networks fail, developing practical security tools, automating repetitive testing workflows, and documenting vulnerability research responsibly.
 
-My primary interests include:
-
-- Web application security
-- Penetration testing
-- Red-team methodology
-- Reconnaissance automation
-- Network security
-- Vulnerability research
-- Capture the Flag challenges
-- Linux and security-tool development
+I am interested in building useful systems rather than collecting tools without understanding how they work.
 
 ---
 
-## `featured_projects`
+## Areas of Focus
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### Security Research
+
+- Web application security
+- Vulnerability analysis
+- Proof-of-concept development
+- Responsible disclosure
+- CVE research
+- Security documentation
+
+</td>
+<td width="50%" valign="top">
+
+### Offensive Security
+
+- Penetration testing
+- Red-team methodology
+- Network security
+- Reconnaissance
+- Attack-surface analysis
+- Capture the Flag challenges
+
+</td>
+</tr>
+
+<tr>
+<td width="50%" valign="top">
+
+### Engineering
+
+- Security automation
+- Command-line utilities
+- Linux tooling
+- HTTP testing tools
+- Recon workflow development
+- Scripting and integration
+
+</td>
+<td width="50%" valign="top">
+
+### Current Learning
+
+- Advanced web exploitation
+- Authentication security
+- Access-control testing
+- Network exploitation
+- Secure tool development
+- Professional reporting
+
+</td>
+</tr>
+</table>
+
+---
+
+## Featured Projects
 
 <table>
 <tr>
@@ -56,32 +106,42 @@ My primary interests include:
 
 ### [HTTPC](https://github.com/Aether-0/httpc)
 
-A lightweight and concurrent HTTP method-testing utility written in Go.
+A lightweight HTTP method-testing utility written in Go.
 
-**Main features**
+It helps security researchers identify supported HTTP methods across one or more authorized targets.
 
-- Concurrent HTTP testing
-- Custom method selection
+**Key capabilities**
+
+- Concurrent request processing
+- Custom HTTP method selection
 - Status-code filtering
-- Timeout and retry controls
-- File and standard-input support
+- Configurable timeout and retries
+- Standard-input support
+- File output
 - Silent and verbose modes
 
-</td>
+**Technology**
 
+`Go` `HTTP` `Concurrency` `CLI`
+
+</td>
 <td width="50%" valign="top">
 
-### [CVE-2024-12986 Tooling](https://github.com/Aether-0/CVE-2024-12986)
+### [CVE-2024-12986 Research Tooling](https://github.com/Aether-0/CVE-2024-12986)
 
-Educational security-research tooling for studying CVE-2024-12986 inside authorized laboratory environments.
+Educational tooling for studying CVE-2024-12986 in controlled and authorized environments.
 
 **Repository contents**
 
 - Bash-based scanner
 - Python proof of concept
-- Vulnerability documentation
+- Vulnerability explanation
 - Testing instructions
 - Responsible-use guidance
+
+**Technology**
+
+`Python` `Bash` `HTTP` `Vulnerability Research`
 
 </td>
 </tr>
@@ -91,30 +151,40 @@ Educational security-research tooling for studying CVE-2024-12986 inside authori
 
 ### [TryHackMe VPN Shortcut](https://github.com/Aether-0/tryhackmevpn-shortcut)
 
-A Linux utility that simplifies managing a TryHackMe OpenVPN connection.
+A Linux command-line utility that simplifies managing a TryHackMe OpenVPN connection.
 
-**Main features**
+**Key capabilities**
 
-- Quick VPN installation
+- VPN configuration installation
 - Global command shortcut
-- Start and stop controls
-- Easy configuration replacement
-- Linux-focused workflow
+- Connection start and stop controls
+- Configuration replacement
+- Linux-focused setup
+
+**Technology**
+
+`Bash` `Linux` `OpenVPN` `Automation`
 
 </td>
-
 <td width="50%" valign="top">
 
-### Vulnerability Research
+### Security Research Portfolio
 
-I study vulnerabilities, build controlled proof-of-concept demonstrations, and document findings for responsible disclosure.
+My research process focuses on reproducible testing, minimal proof of impact, clear documentation, and responsible communication.
 
-```text
-Research milestone:
-CVE-2025-55575
-```
+**Research workflow**
 
-All research is performed in authorized environments.
+- Confirm authorization and scope
+- Reproduce the behavior
+- Identify the root cause
+- Measure realistic impact
+- Build a minimal proof of concept
+- Document remediation guidance
+- Disclose responsibly
+
+**Research milestone**
+
+`CVE-2025-55575`
 
 </td>
 </tr>
@@ -122,55 +192,71 @@ All research is performed in authorized environments.
 
 ---
 
-## `technical_stack`
+## Technical Stack
 
 ### Languages
 
-<p>
-  <img src="https://img.shields.io/badge/Python-111111?style=for-the-badge&logo=python&logoColor=FFD43B" alt="Python">
-  <img src="https://img.shields.io/badge/Go-111111?style=for-the-badge&logo=go&logoColor=00ADD8" alt="Go">
-  <img src="https://img.shields.io/badge/Bash-111111?style=for-the-badge&logo=gnu-bash&logoColor=4EAA25" alt="Bash">
-  <img src="https://img.shields.io/badge/Java-111111?style=for-the-badge&logo=openjdk&logoColor=ED8B00" alt="Java">
-  <img src="https://img.shields.io/badge/HTML5-111111?style=for-the-badge&logo=html5&logoColor=E34F26" alt="HTML5">
-  <img src="https://img.shields.io/badge/CSS3-111111?style=for-the-badge&logo=css3&logoColor=1572B6" alt="CSS3">
-</p>
+<kbd>Python</kbd>
+<kbd>Go</kbd>
+<kbd>Bash</kbd>
+<kbd>Java</kbd>
+<kbd>HTML</kbd>
+<kbd>CSS</kbd>
+<kbd>JavaScript</kbd>
+<kbd>SQL</kbd>
 
 ### Security
 
-<p>
-  <img src="https://img.shields.io/badge/Burp_Suite-111111?style=for-the-badge&logo=burp-suite&logoColor=FF6633" alt="Burp Suite">
-  <img src="https://img.shields.io/badge/Metasploit-111111?style=for-the-badge&logo=metasploit&logoColor=2596CD" alt="Metasploit">
-  <img src="https://img.shields.io/badge/Nmap-111111?style=for-the-badge&logoColor=white" alt="Nmap">
-  <img src="https://img.shields.io/badge/OWASP-111111?style=for-the-badge&logo=owasp&logoColor=white" alt="OWASP">
-  <img src="https://img.shields.io/badge/CTF-111111?style=for-the-badge&logo=hackthebox&logoColor=9FEF00" alt="CTF">
-</p>
+<kbd>Burp Suite</kbd>
+<kbd>Nmap</kbd>
+<kbd>Metasploit</kbd>
+<kbd>OWASP Testing</kbd>
+<kbd>Web Recon</kbd>
+<kbd>Network Analysis</kbd>
+<kbd>CTF</kbd>
 
-### Systems and Development
+### Systems
 
-<p>
-  <img src="https://img.shields.io/badge/Linux-111111?style=for-the-badge&logo=linux&logoColor=FCC624" alt="Linux">
-  <img src="https://img.shields.io/badge/Kali_Linux-111111?style=for-the-badge&logo=kali-linux&logoColor=557C94" alt="Kali Linux">
-  <img src="https://img.shields.io/badge/Parrot_OS-111111?style=for-the-badge&logo=parrotsecurity&logoColor=15E0ED" alt="Parrot OS">
-  <img src="https://img.shields.io/badge/Git-111111?style=for-the-badge&logo=git&logoColor=F05032" alt="Git">
-  <img src="https://img.shields.io/badge/GitHub-111111?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
-</p>
+<kbd>Linux</kbd>
+<kbd>Kali Linux</kbd>
+<kbd>Parrot OS</kbd>
+<kbd>Git</kbd>
+<kbd>GitHub</kbd>
+<kbd>OpenVPN</kbd>
+<kbd>Docker</kbd>
+
+### Development
+
+<kbd>CLI Development</kbd>
+<kbd>Automation</kbd>
+<kbd>REST APIs</kbd>
+<kbd>Concurrency</kbd>
+<kbd>Shell Scripting</kbd>
+<kbd>Technical Documentation</kbd>
 
 ---
 
-## `current_focus`
+## Current Direction
 
 ```python
 aether = {
-    "learning": [
-        "advanced web exploitation",
-        "network security",
-        "red-team operations",
-        "vulnerability research"
+    "research": [
+        "web application vulnerabilities",
+        "access-control failures",
+        "authentication weaknesses",
+        "network security"
     ],
-    "building": [
+    "engineering": [
         "recon automation",
         "security tooling",
-        "Linux utilities"
+        "Linux utilities",
+        "repeatable testing workflows"
+    ],
+    "principles": [
+        "understand before automating",
+        "prove impact without causing harm",
+        "document findings clearly",
+        "test only with authorization"
     ],
     "goal": "Become a professional penetration tester and red teamer"
 }
@@ -178,77 +264,100 @@ aether = {
 
 ---
 
-## `github_activity`
+## Methodology
 
-<div align="center">
-
-<img
-  src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=Aether-0&theme=tokyonight"
-  alt="Aether GitHub statistics"
-  height="180"
-/>
-
-<img
-  src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=Aether-0&theme=tokyonight"
-  alt="Languages by repository"
-  height="180"
-/>
-
-<br><br>
-
-<img
-  src="https://streak-stats.demolab.com?user=Aether-0&theme=tokyonight&hide_border=true"
-  alt="Aether GitHub contribution streak"
-/>
-
-</div>
-
----
-
-## `profile_summary`
-
-<div align="center">
-
-<img
-  src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Aether-0&theme=tokyonight"
-  alt="Aether GitHub profile summary"
-/>
-
-</div>
-
----
-
-## `contribution_graph`
-
-<div align="center">
-
-<img
-  src="https://github-readme-activity-graph.vercel.app/graph?username=Aether-0&theme=tokyo-night&hide_border=true&area=true"
-  alt="Aether GitHub contribution graph"
-/>
-
-</div>
-
----
-
-## `security_policy`
-
-> All security testing, research, and proof-of-concept work presented on this profile is intended only for authorized systems, controlled laboratories, Capture the Flag challenges, and responsible vulnerability disclosure.
-
-I do not support unauthorized access, data theft, service disruption, malware deployment, or other malicious activity.
-
----
-
-## `contact`
-
-For collaboration, bug reports, project questions, or security-tool suggestions, open an issue in the relevant repository.
-
-<div align="center">
-
-### `Think deeply. Test responsibly. Build continuously.`
-
-</div>
-
-```bash
-aether@redshadow:~/security$ echo "The quieter you become, the more you are able to hear."
+```text
+RECON
+  |
+  +-- Asset discovery
+  +-- Service identification
+  +-- Technology analysis
+  +-- Attack-surface mapping
+  |
+TEST
+  |
+  +-- Authentication
+  +-- Authorization
+  +-- Input handling
+  +-- Business logic
+  +-- Configuration
+  |
+VALIDATE
+  |
+  +-- Reproduce consistently
+  +-- Minimize the proof of concept
+  +-- Confirm realistic impact
+  +-- Avoid unnecessary data access
+  |
+REPORT
+  |
+  +-- Explain the root cause
+  +-- Provide reproduction steps
+  +-- Describe the impact
+  +-- Recommend remediation
 ```
+
+---
+
+## Engineering Principles
+
+> Build tools that reduce repetitive work without replacing understanding.
+
+> A successful proof of concept demonstrates the vulnerability with the minimum necessary impact.
+
+> Good security research is reproducible, authorized, clearly documented, and responsibly disclosed.
+
+---
+
+## GitHub Activity
+
+Dynamic statistics have intentionally been excluded to prevent broken images, rate-limit errors, and unavailable third-party services.
+
+You can view my live GitHub information directly through the following pages:
+
+- [Contribution activity](https://github.com/Aether-0)
+- [Public repositories](https://github.com/Aether-0?tab=repositories)
+- [Recently updated repositories](https://github.com/Aether-0?tab=repositories&sort=updated)
+- [Security projects](https://github.com/Aether-0?tab=repositories&q=security)
+
+---
+
+## Responsible Security
+
+All security testing, vulnerability research, and proof-of-concept work presented on this profile is intended only for:
+
+- Systems I own
+- Controlled laboratory environments
+- Capture the Flag challenges
+- Educational platforms
+- Bug-bounty programs within their published scope
+- Systems where explicit authorization has been granted
+
+I do not support unauthorized access, data theft, service disruption, malware deployment, credential abuse, or destructive testing.
+
+---
+
+## Collaboration
+
+For project questions, bug reports, improvements, or responsible security collaboration, open an issue in the relevant repository.
+
+When reporting a problem with one of my tools, include:
+
+- Operating system
+- Tool version or commit
+- Command executed
+- Expected result
+- Actual result
+- Relevant error output
+
+---
+
+<div align="center">
+
+### Think deeply. Test responsibly. Build continuously.
+
+```text
+aether@redshadow:~/security$ echo "Understand the system before attempting to break it."
+```
+
+</div>
