@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./assets/aether-banner.svg" alt="Aether cybersecurity profile banner" width="100%">
+<img src="aether-banner.svg" alt="Aether cybersecurity profile banner" width="100%">
 
 <br>
 
